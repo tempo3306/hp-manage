@@ -151,11 +151,194 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
+                    <el-form-item label="策略" label-width="100px">
+                        <el-button @click="changeStrategy">修改策略</el-button>
+                    </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="cancelData">取 消</el-button>
                     <el-button type="primary" @click="submitForm('selectTable')">确 定</el-button>
                 </div>
+            </el-dialog>
+            <!--策略 -->
+            <el-dialog title="修改策略" width="30%" v-model="strategyVisable">
+                <el-form :model="strategyTable" :rules="rules" ref="strategyTable">
+                    <el-form-item>
+                        <el-select @change="showstrategy" v-model="strategyTable.strategytype">
+                            <el-option v-for="(item, key) in strategyoption" :key="key" :label="item.label"
+                                       :value="item.key">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <!--第一枪出价-->
+                    <template>
+                        <el-form-item label="第一枪"></el-form-item>
+                        <el-form-item label="出价时间">
+                            <el-col :span="7">
+                                <el-input-number v-model="strategyTable.chujia_time1" :step="0.1"
+                                                 size="small" :min="0.0" :max="59.0">
+                                </el-input-number>
+                            </el-col>
+                            <el-col class="line" :span="3">秒 加价</el-col>
+                            <el-col :span="8">
+                                <el-input-number v-model="strategyTable.chujia_price1" :step="100"
+                                                 size="s
+                                                 mall" :min="300" :max="1200">
+                                </el-input-number>
+                            </el-col>
+                        </el-form-item>
+                    </template>
+                    <!--第一枪提交-->
+                    <template v-if="strategyTable.strategytype == '0' || strategyTable.strategytype == '1'
+                                ||    strategyTable.strategytype == '3' ">
+                        <el-form-item>
+                            <el-col :span="7">
+                                <el-select v-model="strategyTable.tijiao_diff1">
+                                    <el-option size="small" v-for="(item,key) in diffoption" :label="item.label"
+                                               :key="key" :value="item.key">
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col class="line" :span="4" style="text-align: center">提交 延迟</el-col>
+                            <el-col :span="6">
+                                <el-input-number v-model="strategyTable.tijiao_yanchi1" :step="0.1"
+                                                 size="small" :min="0.0" :max="1.5">
+                                </el-input-number>
+                            </el-col>
+                        </el-form-item>
+                        <el-form-item label="强制提交">
+                            <el-col :span="10">
+                                <el-input-number v-model="strategyTable.tijiao_time1" :step="0.1"
+                                                 size="small" :min="0.0" :max="59.0">
+                                </el-input-number>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-switch v-model="strategyTable.forcetijiao1"></el-switch>
+                            </el-col>
+                        </el-form-item>
+                    </template>
+                    <!--第二枪出价-->
+                    <template v-if="strategyTable.strategytype == '1' || strategyTable.strategytype == '3' ">
+                        <el-form-item label="第二枪"></el-form-item>
+                        <el-form-item label="出价时间">
+                            <el-col :span="7">
+                                <el-input-number v-model="strategyTable.chujia_time2" :step="0.1"
+                                                 size="small" :min="0.0" :max="59.0">
+                                </el-input-number>
+                            </el-col>
+                            <el-col class="line" :span="3">秒 加价</el-col>
+                            <el-col :span="8">
+                                <el-input-number v-model="strategyTable.chujia_price2" :step="100"
+                                                 size="small" :min="300" :max="1200">
+                                </el-input-number>
+                            </el-col>
+                        </el-form-item>
+                    </template>
+                    <!--第二枪提交-->
+                    <template v-if="strategyTable.strategytype == '1' ">
+                        <el-form-item>
+                            <el-col :span="7">
+                                <el-select v-model="strategyTable.tijiao_diff2">
+                                    <el-option size="small" v-for="(item, key) in diffoption" :label="item.label"
+                                               :key="key" :value="item.key">
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col class="line" :span="4" style="text-align: center">提交 延迟</el-col>
+                            <el-col :span="6">
+                                <el-input-number v-model="strategyTable.tijiao_yanchi2" :step="0.1"
+                                                 size="small" :min="0.0" :max="1.5">
+                                </el-input-number>
+                            </el-col>
+                        </el-form-item>
+                        <el-form-item label="强制提交">
+                            <el-col :span="10">
+                                <el-input-number v-model="strategyTable.tijiao_time2" :step="0.1"
+                                                 size="small" :min="0.0" :max="59.0">
+                                </el-input-number>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-switch v-model="strategyTable.forcetijiao2"></el-switch>
+                            </el-col>
+                        </el-form-item>
+                    </template>
+
+                    <!--&lt;!&ndash;&lt;!&ndash;动态提交&ndash;&gt;&ndash;&gt;-->
+                    <template v-if="strategyTable.strategytype == '2' || strategyTable.strategytype == '3' ">
+                        <el-form-item label="动态提交设置"></el-form-item>
+                        <el-form-item>
+                            <el-col :span="7">
+                                <el-input-number v-model="strategyTable.smart_time1" :step="0.1"
+                                                 size="small" :min="0.0" :max="59.0">
+                                </el-input-number>
+                            </el-col>
+                            <el-col :span="7">
+                                <el-select v-model="strategyTable.smart_diff1">
+                                    <el-option size="small" v-for="item in diffoption" :label="item.label"
+                                               :key="item.key" :value="item.key">
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col class="line" :span="4" style="text-align: center">提交 延迟</el-col>
+                            <el-col :span="6">
+                                <el-input-number v-model="strategyTable.smart_yanchi1" :step="0.1"
+                                                 size="small" :min="0.0" :max="1.5">
+                                </el-input-number>
+                            </el-col>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-col :span="7">
+                                <el-input-number v-model="strategyTable.smart_time2" :step="0.1"
+                                                 size="small" :min="0.0" :max="59.0">
+                                </el-input-number>
+                            </el-col>
+                            <el-col :span="7">
+                                <el-select v-model="strategyTable.smart_diff2">
+                                    <el-option size="small" v-for="(item, key) in diffoption" :label="item.label"
+                                               :key="key" :value="item.key">
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col class="line" :span="4" style="text-align: center">提交 延迟</el-col>
+                            <el-col :span="6">
+                                <el-input-number v-model="strategyTable.smart_yanchi2" :step="0.1"
+                                                 size="small" :min="0.0" :max="1.5">
+                                </el-input-number>
+                            </el-col>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-col :span="7">
+                                <el-input-number v-model="strategyTable.smart_time3" :step="0.1"
+                                                 size="small" :min="0.0" :max="59.0">
+                                </el-input-number>
+                            </el-col>
+                            <el-col :span="7">
+                                <el-select v-model="strategyTable.smart_diff3">
+                                    <el-option size="small" v-for="(item, key) in diffoption" :label="item.label"
+                                               :key="key" value="item.key">
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col class="line" :span="4" style="text-align: center">提交 延迟</el-col>
+                            <el-col :span="6">
+                                <el-input-number v-model="strategyTable.smart_yanchi3" :step="0.1"
+                                                 size="small" :min="0.0" :max="1.5">
+                                </el-input-number>
+                            </el-col>
+                        </el-form-item>
+                        <el-form-item label="强制提交">
+                            <el-col :span="10">
+                                <el-input-number v-model="strategyTable.smart_time" :step="0.1"
+                                                 size="small" :min="0.0" :max="59.0">
+                                </el-input-number>
+                            </el-col>
+                        </el-form-item>
+                    </template>
+                </el-form>
+                <!--<div slot="footer" class="dialog-footer">-->
+                <!--<el-button @click="cancelData">取 消</el-button>-->
+                <!--<el-button type="primary" @click="submitForm('selectTable')">确 定</el-button>-->
+                <!--</div>-->
             </el-dialog>
         </div>
     </div>
@@ -190,7 +373,6 @@
                     return callback(new Error('年龄不能为空'));
                 }
             };
-
             return {
                 baseUrl,
                 baseImgPath,
@@ -212,12 +394,49 @@
                     {label: '购买日期 -', key: '-purchase_date'}, {label: '到期时间 -', key: '-expired_date'},
                     {label: 'id +', key: 'id'}, {label: 'id -', key: '-id'}
                 ],
+                strategyoption: [
+                    {label: '单枪策略', key: '0'},
+                    {label: '双枪策略', key: '1'},
+                    {label: '单枪动态', key: '2'},
+                    {label: '双枪动态', key: '3'},
+                ],
+                diffoption: [
+                    {label: '踩点出价', key: '0'},
+                    {label: '提前100', key: '1'},
+                    {label: '提前200', key: '2'},
+                    {label: '提前300', key: '3'},
+                ],
+                type0: ['0', '1', '3'],
+                type1: ['1'],
                 auctionOptions: [],
                 tableData: [],
                 currentPage: 1,
                 selectTable: {},
+                strategyTable: {
+                    strategytype: {label: '单枪策略', key: '0'},
+                    //第一枪
+                    chujia_time1: 48.0,
+                    chujia_price1: 700,
+                    tijiao_diff1: '0',
+                    tijiao_time1: 55.0,
+                    tijiao_yanchi1: 0.5,
+                    forcetijiao1: true,
+                    //第二枪
+                    chujia_time2: 50.0,
+                    chujia_price2: 700,
+                    tijiao_diff2: '0',
+                    tijiao_time2: 55.0,
+                    tijiao_yanchi2: 0.5,
+                    forcetijiao2: true,
+                    //动态
+                    smart_time1: 50.0, smart_diff1: '0', smart_yanchi1: 0,
+                    smart_time2: 52.0, smart_diff2: '0', smart_yanchi2: 0,
+                    smart_time3: 54.0, smart_diff3: '0', smart_yanchi3: 0,
+                    smart_time: 55.0
+                },
                 auction_name: '',
-                dialogFormVisible: false,
+                dialogFormVisible: false,  //标书
+                strategyVisable: false,   //策略修改
                 categoryOptions: [],
                 selectedCategory: [],
                 address: {},
@@ -384,6 +603,9 @@
                 // this.selectTable = Object.assign({}, row); //深拷贝
                 // this.dialogFormVisible = true;  //弹出对话框
             },
+            changeStrategy() {
+                this.strategyVisable = true;
+            },
             async handleDelete(index, row) {
                 try {
                     const res = await deleteIdentify_code(row.id);
@@ -407,41 +629,6 @@
                     console.log('删除店铺失败');
                 }
             },
-            // async querySearchAsync(queryString, cb) {
-            //     if (queryString) {
-            //         try {
-            //             const cityList = await searchplace(this.city.id, queryString);
-            //             if (cityList instanceof Array) {
-            //                 cityList.map(item => {
-            //                     item.value = item.address;
-            //                     return item;
-            //                 });
-            //                 cb(cityList);
-            //             }
-            //         } catch (err) {
-            //             console.log(err);
-            //         }
-            //     }
-            // },
-            // handleServiceAvatarScucess(res, file) {
-            //     if (res.status == 1) {
-            //         this.selectTable.image_path = res.image_path;
-            //     } else {
-            //         this.$message.error('上传图片失败！');
-            //     }
-            // },
-            // beforeAvatarUpload(file) {
-            //     const isRightType = (file.type === 'image/jpeg') || (file.type === 'image/png');
-            //     const isLt2M = file.size / 1024 / 1024 < 2;
-            //
-            //     if (!isRightType) {
-            //         this.$message.error('上传头像图片只能是 JPG 格式!');
-            //     }
-            //     if (!isLt2M) {
-            //         this.$message.error('上传头像图片大小不能超过 2MB!');
-            //     }
-            //     return isRightType && isLt2M;
-            // },
             async updateData() {
                 this.dialogFormVisible = false;
                 try {
@@ -469,6 +656,9 @@
             },
             cancelData() {
                 this.dialogFormVisible = false;
+            },
+            showstrategy() {
+                console.log(this.strategyTable);
             }
         }
     };
