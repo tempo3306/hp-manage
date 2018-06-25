@@ -47,6 +47,12 @@
                     <!-- 组件将被缓存 -->
                     <router-view></router-view>
 				</keep-alive>
+
+                <!--<keep-alive>-->
+                    <!--<router-view v-if="$route.meta.keepAlive"></router-view>-->
+                <!--</keep-alive>-->
+                <!--<router-view v-if="!$route.meta.keepAlive"></router-view>-->
+
 			</el-col>
 		</el-row>
   	</div>

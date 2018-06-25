@@ -24,21 +24,37 @@
                 <el-table-column type="expand">
                     <template scope="props">
                         <el-form label-position="left" inline class="demo-table-expand">
-                            <el-form-item label="ID">
-                                <span>{{ props.row.id }}</span>
-                            </el-form-item>
-                            <el-form-item label="名称">
-                                <span>{{ props.row.bid_name }}</span>
-                            </el-form-item>
-                            <el-form-item label="购买日期">
-                                <span>{{ props.row.purchase_date_str }}</span>
-                            </el-form-item>
-                            <el-form-item label="到期时间">
-                                <span>{{ props.row.expired_date_str }}</span>
-                            </el-form-item>
-                            <el-form-item label="激活码">
-                                <span>{{ props.row.identify_code }}</span>
-                            </el-form-item>
+                            <template v-if="props.row.auction">
+                                <el-form-item label="标书id">
+                                    <span>{{ props.row.auction.auction_id }}</span>
+                                </el-form-item>
+                                <el-form-item label="描述">
+                                    <span>{{ props.row.auction.description }}</span>
+                                </el-form-item>
+                                <el-form-item label="标书名">
+                                    <span>{{ props.row.auction.auction_name }}</span>
+                                </el-form-item>
+                                <el-form-item label="身份证号">
+                                    <span>{{ props.row.auction.ID_number }}</span>
+                                </el-form-item>
+                                <el-form-item label="标书号">
+                                    <span>{{ props.row.auction.Bid_number }}</span>
+                                </el-form-item>
+                                <el-form-item label="标书密码">
+                                    <span>{{ props.row.auction.Bid_password }}</span>
+                                </el-form-item>
+                                <el-form-item label="参拍次数">
+                                    <span>{{ props.row.auction.count }}</span>
+                                </el-form-item>
+                                <el-form-item label="标书到期时间">
+                                    <span>{{ props.row.auction.expired_date_str }}</span>
+                                </el-form-item>
+                            </template>
+                            <template v-else>
+                                <el-form-item>
+                                    <span> 未绑定任何标书 </span>
+                                </el-form-item>
+                            </template>
                         </el-form>
                     </template>
                 </el-table-column>
@@ -61,6 +77,10 @@
                 <el-table-column
                     label="激活码"
                     prop="identify_code">
+                </el-table-column>
+                <el-table-column
+                    label="标书"
+                    prop="auction_name">
                 </el-table-column>
                 <el-table-column label="操作" width="200">
                     <!--scope 对 父元素遍历，scope返回的值是slot标签上返回的所有属性值，并且是一个对象的形式保存起来，获取的是一个对象-->
@@ -124,6 +144,13 @@
                         </el-col>
                         <el-col class="line" :span="12">{{'当前激活码: ' + selectTable.identify_code}}</el-col>
                     </el-form-item>
+                    <el-form-item label="标书" label-width="100px" placeholder="选择">
+                        <el-select class="filter-item" v-model="selectTable.auction_name">
+                            <el-option v-for="item in auctionOptions" :key="item.key" :label="item.label"
+                                       :value="item.key">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="cancelData">取 消</el-button>
@@ -141,10 +168,9 @@
         getIdentify_code,
         addIdentify_code,
         updateIdentify_code,
-        deleteIdentify_code,
+        deleteIdentify_code, getAuction,
     } from '@/api/hpData';
     import waves from '@/directive/waves'; // 水波纹指令
-
 
 
     export default {
@@ -186,9 +212,11 @@
                     {label: '购买日期 -', key: '-purchase_date'}, {label: '到期时间 -', key: '-expired_date'},
                     {label: 'id +', key: 'id'}, {label: 'id -', key: '-id'}
                 ],
+                auctionOptions: [],
                 tableData: [],
                 currentPage: 1,
                 selectTable: {},
+                auction_name: '',
                 dialogFormVisible: false,
                 categoryOptions: [],
                 selectedCategory: [],
@@ -225,6 +253,7 @@
                     console.log('获取数据失败', err);
                 }
             },
+
             async getIdentify_code() {
                 console.log(this.listQuery);
                 const identify_codes = await getIdentify_code({
@@ -242,13 +271,47 @@
                         const tableData = {};
                         tableData.id = item.id;
                         tableData.bid_name = item.bid_name;
+                        tableData.identify_code = item.identify_code;
                         tableData.purchase_date_str = item.purchase_date;
                         tableData.expired_date_str = item.expired_date;
                         tableData.purchase_date = new Date(item.purchase_date.replace(/-/g, '/'));
                         tableData.expired_date = new Date(item.expired_date.replace(/-/g, '/'));
-                        tableData.identify_code = item.identify_code;
+                        tableData.auction_name = '无标书信息';
+                        //auction
+                        if (item.auction.length !== 0) {
+                            let auction = item.auction[0];
+                            tableData.auction = {};
+                            tableData.auction_name = auction.auction_name;
+                            tableData.auction.auction_id = auction.id;
+                            tableData.auction.description = auction.description;
+                            tableData.auction.auction_name = auction.auction_name;
+                            tableData.auction.ID_number = auction.ID_number;
+                            tableData.auction.Bid_number = auction.Bid_number;
+                            tableData.auction.Bid_password = auction.Bid_password;
+                            tableData.auction.count = auction.count;
+                            tableData.auction.expired_date_str = auction.expired_date;
+                            tableData.auction.expired_date = new Date(auction.expired_date.replace(/-/g, '/'));
+                        }
                         this.tableData.push(tableData);
                     });
+                }
+            },
+            async getAuctionOption() {
+                const res = await getAuction({
+                    format: 'json',
+                    available: 1,  //筛选未绑定的标书
+                });
+
+                if (res.status == 200) {
+                    res.data.forEach(item => {
+                        this.auctionOptions.push({
+                            label: item.auction_name,
+                            key: item.id
+                        });
+                    });
+                }
+                else {
+                    console.log('初始化失败');
                 }
             },
             handleSizeChange(val) {
@@ -291,16 +354,30 @@
                 console.log(this.selectTable);
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        //判断 是否修改了绑定的标书
+                        if (this.auction_name !== this.selectTable.auction_name) {
+                            console.log('修改了');
+                            // this.selectTable.auction_name   内存放的是标书的id
+                            this.selectTable.changeauction = 1;
+                        }
+                        else {
+                            this.selectTable.changeauction = 0;
+                        }
                         this.updateData();
                     } else {
                         console.log('error submit!!');
                         return false;
                     }
                 });
+
             },
             handleEdit(index, row) {
                 this.selectTable = Object.assign({}, row); //深拷贝
+                this.auction_name = this.selectTable.auction_name;  //存档一下
                 this.dialogFormVisible = true;  //弹出对话框
+                //先清空选项,然后初始化
+                this.auctionOptions = [];
+                this.getAuctionOption();
             },
             handleAdd() {
                 this.$router.push({path: 'addIdentify_code'});

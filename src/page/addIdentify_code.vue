@@ -28,6 +28,13 @@
                     </el-form-item>
                 </el-col>
             </el-form-item>
+            <el-form-item label="标书" label-width="100px" prop="auction_name">
+                <el-select class="filter-item" v-model="selectTable.auction_name">
+                    <el-option v-for="item in auctionOptions" :key="item.key" :label="item.label"
+                               :value="item.key">
+                    </el-option>
+                </el-select>
+            </el-form-item>
         </el-form>
         <div slot="footer" class="addfooter">
             <el-button @click="resetData">还原</el-button>
@@ -37,7 +44,7 @@
 </template>
 
 <script>
-    import {postIdentify_code} from '@/api/hpData';
+    import {getAuction, postIdentify_code} from '@/api/hpData';
     import {mapState, mapActions} from 'vuex';
     import headTop from '@/components/headTop';
 
@@ -47,6 +54,7 @@
             return {
                 title: '创建激活码',
                 selectTable: Object.assign({}, this.$store.state.codetable),
+                auctionOptions: [],
                 rules: {
                     bid_name: [
                         {required: true, message: '请输入名称', trigger: 'blur'},
@@ -58,14 +66,23 @@
                     expired_date: [
                         {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
                     ],
+                    auction_name: [
+                        {required: true}
+                    ],
                 }
             };
+        },
+        // vue组件级路由钩子函数(beforeRouteEnter/beforeRouteUpdate/beforeRouteLeave)
+    beforeRouteEnter(to, from, next) {
+            next(vm =>{
+                vm.getAuctionOption()
+            })
         },
         watch: {
             selectTable: {
                 handler(value, oldValue) {
                     let copiedValue = Object.assign({}, value);
-                    this.$store.commit('ADDCODE', copiedValue)
+                    this.$store.commit('ADDCODE', copiedValue);
                 },
                 deep: true
             }
@@ -77,6 +94,7 @@
         // mounted (){
         //     this.selectTable = this.codetable;  //初始化
         // },
+
         components: {
             headTop,
         },
@@ -114,13 +132,30 @@
             resetData() {
                 this.selectTable = this.codetable;
             },
+            async getAuctionOption() {
+                const res = await getAuction({
+                    format: 'json',
+                    available: 1,  //筛选未绑定的标书
+                });
+                if (res.status == 200) {
+                    res.data.forEach(item => {
+                        this.auctionOptions.push({
+                            label: item.auction_name,
+                            key: item.id
+                        });
+                    });
+                }
+                else {
+                    console.log('初始化失败');
+                }
+            }
         }
     };
 </script>
 
 <style scoped>
-.addfooter {
-    float: right;
-    padding-right: 42%;
-}
+    .addfooter {
+        float: right;
+        padding-right: 42%;
+    }
 </style>

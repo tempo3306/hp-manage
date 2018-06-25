@@ -13,7 +13,7 @@ let baseImgPath;
 
 if (process.env.NODE_ENV == 'development') {
     baseUrl = '//127.0.0.1:8000';
-    baseImgPath = '/media/user_image/';
+    baseImgPath = '//127.0.0.1:8000/media/user_image/';
 } else {
     baseUrl = 'https://hupai.pro';
     baseImgPath = 'https://hupai.pro/media/user_image/';

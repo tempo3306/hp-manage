@@ -272,7 +272,8 @@
                 console.log(this.listQuery);
                 const res = await getAuction({
                     page: this.listQuery.page, limit: this.listQuery.limit,
-                    format: 'json', search: this.listQuery.search, sort: this.listQuery.sort
+                    format: 'json', search: this.listQuery.search, sort: this.listQuery.sort,
+                    available: 0
                 });
                 if (res.status >= 400) {
                     this.$router.push('login');

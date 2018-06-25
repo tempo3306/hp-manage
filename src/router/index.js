@@ -12,9 +12,16 @@ try{
         let actiontable = window.localStorage.getItem('actiontable');
         let data = {};
         console.log(auctiontable);
-        (codetable)?data.codetable = JSON.parse(codetable):console.log("");
+        if (codetable) {
+            data.codetable = JSON.parse(codetable);
+            data.codetable.purchase_date = new Date(data.codetable.purchase_date);
+            data.codetable.expired_date = new Date(data.codetable.expired_date);
+        }
+        if (auctiontable) {
+            data.auctiontable = JSON.parse(auctiontable);
+            data.auctiontable.expired_date = new Date(data.auctiontable.expired_date)
+        }
         (handertable)?data.handertable = JSON.parse(handertable):console.log("");
-        (auctiontable)?data.auctiontable = JSON.parse(auctiontable):console.log("");
         (actiontable)?data.actiontable = JSON.parse(actiontable):console.log("");
 
         console.log(data);
@@ -97,28 +104,29 @@ const routes = [
                 component: addHander,
                 meta: {
                     requireAuth: true,
-                    nav: ['添加数据', '添加拍手']
+                    nav: ['添加数据', '添加拍手'],
                 },
             }, {
                 path: '/addAuction',
                 component: addAuction,
                 meta: {
                     requireAuth: true,
-                    nav: ['添加数据', '添加标书']
+                    nav: ['添加数据', '添加标书'],
                 },
             }, {
                 path: '/addAction',
                 component: addAuction,
                 meta: {
                     requireAuth: true,
-                    nav: ['添加数据', '添加策略']
+                    nav: ['添加数据', '添加策略'],
+                    // keepAlive: false // 不需要被缓存
                 },
             }, {
                 path: '/addIdentify_code',
                 component: addIdentify_code,
                 meta: {
                     requireAuth: true,
-                    nav: ['添加数据', '添加激活码']
+                    nav: ['添加数据', '添加激活码'],
                 },
             }, {
                 path: '/adminSet',
