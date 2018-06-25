@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/page/identify_codeList.vue" line="435" />
-    <bookmark url="file://$PROJECT_DIR$/src/page/identify_codeList.vue" line="397" mnemonic="1" />
-    <bookmark url="file://$PROJECT_DIR$/src/page/identify_codeList.vue" line="174" />
-    <bookmark url="file://$PROJECT_DIR$/src/page/identify_codeList.vue" line="173" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/src/page/identify_codeList.vue" line="447" />
+    <bookmark url="file://$PROJECT_DIR$/src/page/identify_codeList.vue" line="407" mnemonic="1" />
+    <bookmark url="file://$PROJECT_DIR$/src/page/identify_codeList.vue" line="180" />
+    <bookmark url="file://$PROJECT_DIR$/src/page/identify_codeList.vue" line="179" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e1e3923-3498-4809-8688-c79afe8cb494" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/webResources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page/addAction.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/addAction.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/page/identify_codeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/identify_codeList.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -45,8 +41,8 @@
       <file leaf-file-name="identify_codeList.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/page/identify_codeList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="422">
-              <caret line="123" column="48" selection-start-line="123" selection-start-column="48" selection-end-line="123" selection-end-column="48" />
+            <state relative-caret-position="309">
+              <caret line="655" column="57" lean-forward="true" selection-start-line="655" selection-start-column="57" selection-end-line="655" selection-end-column="57" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -97,15 +93,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>env</find>
-      <find>baseurl</find>
-      <find>baseUrl</find>
-      <find>static</find>
-      <find>mounted</find>
-      <find>created</find>
-      <find>ava</find>
-      <find>selectTable</find>
-      <find>change_identify_code</find>
       <find>if</find>
       <find>v-if</find>
       <find>create</find>
@@ -127,6 +114,15 @@
       <find>change</find>
       <find>key</find>
       <find>2</find>
+      <find>'2'</find>
+      <find>strategy</find>
+      <find>strategy_type</find>
+      <find>strategytype</find>
+      <find>console.log</find>
+      <find>row</find>
+      <find>edit</find>
+      <find>确认</find>
+      <find>handleEdit</find>
     </findStrings>
     <replaceStrings>
       <replace>data.count</replace>
@@ -142,6 +138,8 @@
       <replace>Action</replace>
       <replace>Auction</replace>
       <replace>addAuction</replace>
+      <replace>'3'</replace>
+      <replace>strategy_dick</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -300,12 +298,12 @@
       <workItem from="1529486521929" duration="1953000" />
       <workItem from="1529817794260" duration="16026000" />
       <workItem from="1529891541230" duration="369000" />
-      <workItem from="1529891948536" duration="16502000" />
+      <workItem from="1529891948536" duration="26151000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="225190000" />
+    <option name="totallyTimeSpent" value="234839000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="947" extended-state="0" />
@@ -317,7 +315,7 @@
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.32889965" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49909583" weight="0.40266022" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32889965" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -719,8 +717,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/page/identify_codeList.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="123" column="48" selection-start-line="123" selection-start-column="48" selection-end-line="123" selection-end-column="48" />
+        <state relative-caret-position="309">
+          <caret line="655" column="57" lean-forward="true" selection-start-line="655" selection-start-column="57" selection-end-line="655" selection-end-column="57" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />

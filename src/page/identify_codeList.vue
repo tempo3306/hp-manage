@@ -54,6 +54,9 @@
                                 <el-form-item>
                                     <span> 未绑定任何标书 </span>
                                 </el-form-item>
+                                <el-form-item label="当前策略">
+                                    <span>{{ props.row.strategy_text }}</span>
+                                </el-form-item>
                             </template>
                         </el-form>
                     </template>
@@ -154,6 +157,9 @@
                     <el-form-item label="策略" label-width="100px">
                         <el-button @click="changeStrategy">修改策略</el-button>
                     </el-form-item>
+                    <el-form-item label="当前策略" label-width="100px">
+                        {{ selectTable.strategy_text }}
+                    </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="cancelData">取 消</el-button>
@@ -183,7 +189,7 @@
                             <el-col :span="8">
                                 <el-input-number v-model="strategyTable.chujia_price1" :step="100"
                                                  size="s
-                                                 mall" :min="300" :max="1200">
+                                                 mall" :min="300" :max="2000">
                                 </el-input-number>
                             </el-col>
                         </el-form-item>
@@ -229,7 +235,7 @@
                             <el-col class="line" :span="3">秒 加价</el-col>
                             <el-col :span="8">
                                 <el-input-number v-model="strategyTable.chujia_price2" :step="100"
-                                                 size="small" :min="300" :max="1200">
+                                                 size="small" :min="300" :max="2000">
                                 </el-input-number>
                             </el-col>
                         </el-form-item>
@@ -333,6 +339,10 @@
                                 </el-input-number>
                             </el-col>
                         </el-form-item>
+                        <div slot="footer" class="dialog-footer">
+                            <el-button @click="cancelData">取 消</el-button>
+                            <el-button type="primary" @click="closeStrategy">确 定</el-button>
+                        </div>
                     </template>
                 </el-form>
                 <!--<div slot="footer" class="dialog-footer">-->
@@ -401,10 +411,10 @@
                     {label: '双枪动态', key: '3'},
                 ],
                 diffoption: [
-                    {label: '踩点出价', key: '0'},
-                    {label: '提前100', key: '1'},
-                    {label: '提前200', key: '2'},
-                    {label: '提前300', key: '3'},
+                    {label: '踩点出价', key: 0},
+                    {label: '提前100', key: 100},
+                    {label: '提前200', key: 200},
+                    {label: '提前300', key: 300},
                 ],
                 type0: ['0', '1', '3'],
                 type1: ['1'],
@@ -413,25 +423,27 @@
                 currentPage: 1,
                 selectTable: {},
                 strategyTable: {
-                    strategytype: {label: '单枪策略', key: '0'},
+                    strategytype: '0',  //初始化策略
                     //第一枪
                     chujia_time1: 48.0,
                     chujia_price1: 700,
-                    tijiao_diff1: '0',
+                    tijiao_diff1: 0,
                     tijiao_time1: 55.0,
                     tijiao_yanchi1: 0.5,
                     forcetijiao1: true,
+                    //补枪
+                    autoprice: true,
                     //第二枪
                     chujia_time2: 50.0,
                     chujia_price2: 700,
-                    tijiao_diff2: '0',
+                    tijiao_diff2: 0,
                     tijiao_time2: 55.0,
                     tijiao_yanchi2: 0.5,
                     forcetijiao2: true,
                     //动态
-                    smart_time1: 50.0, smart_diff1: '0', smart_yanchi1: 0,
-                    smart_time2: 52.0, smart_diff2: '0', smart_yanchi2: 0,
-                    smart_time3: 54.0, smart_diff3: '0', smart_yanchi3: 0,
+                    smart_diff1: 0, smart_yanchi1: 0, smart_time1: 50.0,
+                    smart_diff2: 0, smart_yanchi2: 0, smart_time2: 52.0,
+                    smart_diff3: 100, smart_yanchi3: 0, smart_time3: 54.0,
                     smart_time: 55.0
                 },
                 auction_name: '',
@@ -510,6 +522,44 @@
                             tableData.auction.count = auction.count;
                             tableData.auction.expired_date_str = auction.expired_date;
                             tableData.auction.expired_date = new Date(auction.expired_date.replace(/-/g, '/'));
+                        }
+                        //strategy
+                        //{0: Array(7), 1: Array(13), 2: Array(13), 3: Array(19), 4: Array(3),
+                        // yanzhengma_scale: true, strategy_description: "单枪  48秒加700截止56秒提前100",
+                        // strategy_type: "0", enter_on: true}
+                        let strategy_dick = this.handlestrategy(item.strategy_dick);
+                        if (strategy_dick) {
+                            let strategy_type = strategy_dick['strategy_type']; //0  1   2   3
+                            tableData.strategy_dick = strategy_dick;
+                            switch (strategy_type) {
+                                case '0': {
+                                    tableData.strategy_text = strategy_dick.strategy_description;
+                                }
+                                    break;
+                                case '1': {
+                                    tableData.strategy_text = strategy_dick.strategy_description;
+                                }
+                                    break;
+                                case '2': {
+                                    tableData.strategy_text = `${strategy_dick.strategy_description} \
+                                    ${strategy_dick['2'][3]} 前提前${strategy_dick['2'][4]}延迟${strategy_dick['2'][5]}} \
+                                    ${strategy_dick['2'][6]} 前提前${strategy_dick['2'][7]}延迟${strategy_dick['2'][8]}} \
+                                    ${strategy_dick['2'][9]} 前提前${strategy_dick['2'][10]}延迟${strategy_dick['2'][11]}} \
+                                    强制${strategy_dick['2'][12]}秒`;
+                                }
+                                    break;
+                                case '3': {
+                                    tableData.strategy_text = `${strategy_dick.strategy_dick_description} \
+                                    ${strategy_dick['3'][9]} 前提前${strategy_dick['3'][10]}延迟${strategy_dick['3'][11]}} \
+                                    ${strategy_dick['3'][12]} 前提前${strategy_dick['3'][13]}延迟${strategy_dick['3'][14]}} \
+                                    ${strategy_dick['3'][15]} 前提前${strategy_dick['3'][16]}延迟${strategy_dick['3'][17]}} \
+                                    强制${strategy_dick['3'][18]}秒`;
+                                }
+                                    break;
+                            }
+                        }
+                        else {
+                            tableData.strategy_text = '未定义';
                         }
                         this.tableData.push(tableData);
                     });
@@ -597,6 +647,18 @@
                 //先清空选项,然后初始化
                 this.auctionOptions = [];
                 this.getAuctionOption();
+                //保存策略数据
+                if (this.selectTable.strategy_text !== '未定义') {
+
+                    let dick = this.selectTable.strategy_dick;
+                    let temp = dick[dick.strategy_type];
+                    let index = 0;
+                    for (let key in this.strategyTable) {
+                        this.strategyTable[key] = temp[index];
+                        index++;
+                    }
+                }
+
             },
             handleAdd() {
                 this.$router.push({path: 'addIdentify_code'});
@@ -605,6 +667,17 @@
             },
             changeStrategy() {
                 this.strategyVisable = true;
+                console.log(this.strategyTable);
+                //
+            },
+            //策略对话框确认
+            closeStrategy() {
+                this.strategyVisable = false;
+            },
+            //策略对话框取消
+            cancelStrategy() {
+                this.strategyVisable = false;
+
             },
             async handleDelete(index, row) {
                 try {
@@ -659,6 +732,15 @@
             },
             showstrategy() {
                 console.log(this.strategyTable);
+            },
+            handlestrategy(stragtegy) {
+                if (stragtegy == 'none') {
+                    return null;
+                }
+                else {
+                    console.log(stragtegy);
+                    return JSON.parse(stragtegy);
+                }
             }
         }
     };
