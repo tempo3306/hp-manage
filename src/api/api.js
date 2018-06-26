@@ -102,6 +102,7 @@ export default {
         return axios({
             method: 'post',
             url: baseUrl + url,
+            // data: JSON.stringify(data),
             data: qs.stringify(data),
             timeout: 30000,
         }).then(checkStatus).then(checkCode);
@@ -120,6 +121,7 @@ export default {
             method: 'patch',
             url: baseUrl + url,
             data: qs.stringify(data),
+            // data: JSON.stringify(data),
             timeout: 30000,
         }).then(checkStatus).then(checkCode);
     },

@@ -15,7 +15,6 @@
                 <el-input @keyup.enter.native="handleFilter" style="width: 140px;float: right" class="filter-item"
                           :placeholder="label.search" v-model="listQuery.search">
                 </el-input>
-
             </div>
             <el-table
                 :data="tableData"
@@ -54,10 +53,10 @@
                                 <el-form-item>
                                     <span> 未绑定任何标书 </span>
                                 </el-form-item>
-                                <el-form-item label="当前策略">
-                                    <span>{{ props.row.strategy_text }}</span>
-                                </el-form-item>
                             </template>
+                            <el-form-item label="当前策略">
+                                <span>{{ props.row.strategy_text }}</span>
+                            </el-form-item>
                         </el-form>
                     </template>
                 </el-table-column>
@@ -215,12 +214,19 @@
                         <el-form-item label="强制提交">
                             <el-col :span="10">
                                 <el-input-number v-model="strategyTable.tijiao_time1" :step="0.1"
-                                                 size="small" :min="0.0" :max="59.0">
+                                                 size="small" :min="0.0" :max="59.0" :disabled="!strategyTable.forcetijiao1">
                                 </el-input-number>
                             </el-col>
                             <el-col :span="6">
                                 <el-switch v-model="strategyTable.forcetijiao1"></el-switch>
                             </el-col>
+                        </el-form-item>
+                    </template>
+
+                    <!--智能补枪-->
+                    <template v-if="strategyTable.strategytype == '0' || strategyTable.strategytype == '2' ">
+                        <el-form-item label="智能补枪">
+                            <el-switch v-model="strategyTable.autoprice"></el-switch>
                         </el-form-item>
                     </template>
                     <!--第二枪出价-->
@@ -260,7 +266,7 @@
                         <el-form-item label="强制提交">
                             <el-col :span="10">
                                 <el-input-number v-model="strategyTable.tijiao_time2" :step="0.1"
-                                                 size="small" :min="0.0" :max="59.0">
+                                                 size="small" :min="0.0" :max="59.0" :disabled="!strategyTable.forcetijiao2">
                                 </el-input-number>
                             </el-col>
                             <el-col :span="6">
@@ -268,7 +274,6 @@
                             </el-col>
                         </el-form-item>
                     </template>
-
                     <!--&lt;!&ndash;&lt;!&ndash;动态提交&ndash;&gt;&ndash;&gt;-->
                     <template v-if="strategyTable.strategytype == '2' || strategyTable.strategytype == '3' ">
                         <el-form-item label="动态提交设置"></el-form-item>
@@ -344,6 +349,9 @@
                             <el-button type="primary" @click="closeStrategy">确 定</el-button>
                         </div>
                     </template>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button type="primary" @click="closeStrategy">确 定</el-button>
+                    </div>
                 </el-form>
                 <!--<div slot="footer" class="dialog-footer">-->
                 <!--<el-button @click="cancelData">取 消</el-button>-->
@@ -620,6 +628,10 @@
                 // },
             },
             submitForm(formName) {
+                this.selectTable.strategy = [];
+                for (let key in this.strategyTable) {
+                    this.selectTable.strategy.push(this.strategyTable[key]);
+                }
                 console.log(this.selectTable);
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
@@ -627,10 +639,10 @@
                         if (this.auction_name !== this.selectTable.auction_name) {
                             console.log('修改了');
                             // this.selectTable.auction_name   内存放的是标书的id
-                            this.selectTable.changeauction = 1;
+                            this.selectTable.changeauction = true;
                         }
                         else {
-                            this.selectTable.changeauction = 0;
+                            this.selectTable.changeauction = false;
                         }
                         this.updateData();
                     } else {
@@ -649,7 +661,6 @@
                 this.getAuctionOption();
                 //保存策略数据
                 if (this.selectTable.strategy_text !== '未定义') {
-
                     let dick = this.selectTable.strategy_dick;
                     let temp = dick[dick.strategy_type];
                     let index = 0;
@@ -709,7 +720,8 @@
                     this.selectTable.purchase_date_str = this.selectTable.purchase_date.ymd();
                     this.selectTable.expired_date_str = this.selectTable.expired_date.ymd();
                     this.selectTable.change_identify_code = this.change_identify_code;
-                    const res = await updateIdentify_code(this.selectTable.id, this.selectTable);
+                    let data = {'data': JSON.stringify(this.selectTable)};
+                    const res = await updateIdentify_code(this.selectTable.id, data);
                     console.log(res.status);
                     if (res.status === 200) {
                         this.$message({

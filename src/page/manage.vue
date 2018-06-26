@@ -10,7 +10,7 @@
 						<template slot="title"><i class="el-icon-document"></i>数据管理</template>
 						<el-menu-item index="handerList">拍手列表</el-menu-item>
 						<el-menu-item index="auctionList">标书列表</el-menu-item>
-						<el-menu-item index="userList">策略列表</el-menu-item>
+						<!--<el-menu-item index="userList">策略列表</el-menu-item>-->
                         <el-menu-item index="identify_codeList">激活码列表</el-menu-item>
 					</el-submenu>
 					<el-submenu index="3">
@@ -18,7 +18,7 @@
                         <!--index属性直接书写的路由-->
                         <el-menu-item index="addHander">添加拍手</el-menu-item>
                         <el-menu-item index="addAuction">添加标书</el-menu-item>
-                        <el-menu-item index="addAction">添加策略</el-menu-item>
+                        <!--<el-menu-item index="addAction">添加策略</el-menu-item>-->
                         <el-menu-item index="addIdentify_code">添加激活码</el-menu-item>
 					</el-submenu>
 					<!--<el-submenu index="4">-->
