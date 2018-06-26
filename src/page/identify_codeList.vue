@@ -214,7 +214,8 @@
                         <el-form-item label="强制提交">
                             <el-col :span="10">
                                 <el-input-number v-model="strategyTable.tijiao_time1" :step="0.1"
-                                                 size="small" :min="0.0" :max="59.0" :disabled="!strategyTable.forcetijiao1">
+                                                 size="small" :min="0.0" :max="59.0"
+                                                 :disabled="!strategyTable.forcetijiao1">
                                 </el-input-number>
                             </el-col>
                             <el-col :span="6">
@@ -266,7 +267,8 @@
                         <el-form-item label="强制提交">
                             <el-col :span="10">
                                 <el-input-number v-model="strategyTable.tijiao_time2" :step="0.1"
-                                                 size="small" :min="0.0" :max="59.0" :disabled="!strategyTable.forcetijiao2">
+                                                 size="small" :min="0.0" :max="59.0"
+                                                 :disabled="!strategyTable.forcetijiao2">
                                 </el-input-number>
                             </el-col>
                             <el-col :span="6">
@@ -436,8 +438,8 @@
                     chujia_time1: 48.0,
                     chujia_price1: 700,
                     tijiao_diff1: 0,
-                    tijiao_time1: 55.0,
                     tijiao_yanchi1: 0.5,
+                    tijiao_time1: 55.0,
                     forcetijiao1: true,
                     //补枪
                     autoprice: true,
@@ -445,8 +447,8 @@
                     chujia_time2: 50.0,
                     chujia_price2: 700,
                     tijiao_diff2: 0,
-                    tijiao_time2: 55.0,
                     tijiao_yanchi2: 0.5,
+                    tijiao_time2: 55.0,
                     forcetijiao2: true,
                     //动态
                     smart_diff1: 0, smart_yanchi1: 0, smart_time1: 50.0,
@@ -536,32 +538,43 @@
                         // yanzhengma_scale: true, strategy_description: "单枪  48秒加700截止56秒提前100",
                         // strategy_type: "0", enter_on: true}
                         let strategy_dick = this.handlestrategy(item.strategy_dick);
+                        console.log(strategy_dick);
                         if (strategy_dick) {
                             let strategy_type = strategy_dick['strategy_type']; //0  1   2   3
                             tableData.strategy_dick = strategy_dick;
+                            console.log("fdsfsdf", strategy_type);
                             switch (strategy_type) {
                                 case '0': {
-                                    tableData.strategy_text = strategy_dick.strategy_description;
+                                    tableData.strategy_text = strategy_dick.strategy_description +
+                                        `第一枪 ${strategy_dick['2'][1]} 加 ${strategy_dick['2'][2]}\
+                                        提前${strategy_dick['2'][3]}延迟${strategy_dick['2'][4]} \
+                                        强制${strategy_dick['2'][5]}`;
                                 }
                                     break;
                                 case '1': {
-                                    tableData.strategy_text = strategy_dick.strategy_description;
+                                    tableData.strategy_text = strategy_dick.strategy_description +
+                                        `第一枪 ${strategy_dick['2'][1]} 加 ${strategy_dick['2'][2]}\
+                                    提前${strategy_dick['2'][3]}延迟${strategy_dick['2'][4]} \
+                                    强制${strategy_dick['2'][5]} \
+                                    第二枪 ${strategy_dick['2'][8]} 加 ${strategy_dick['2'][9]}\\
+                                    提前${strategy_dick['2'][10]}延迟${strategy_dick['2'][11]} \\
+                                    强制${strategy_dick['2'][12]}`;
                                 }
                                     break;
                                 case '2': {
                                     tableData.strategy_text = `${strategy_dick.strategy_description} \
-                                    ${strategy_dick['2'][3]} 前提前${strategy_dick['2'][4]}延迟${strategy_dick['2'][5]}} \
-                                    ${strategy_dick['2'][6]} 前提前${strategy_dick['2'][7]}延迟${strategy_dick['2'][8]}} \
-                                    ${strategy_dick['2'][9]} 前提前${strategy_dick['2'][10]}延迟${strategy_dick['2'][11]}} \
-                                    强制${strategy_dick['2'][12]}秒`;
+                                    ${strategy_dick['2'][16]} 前提前${strategy_dick['2'][14]}延迟${strategy_dick['2'][15]} \
+                                    ${strategy_dick['2'][19]} 前提前${strategy_dick['2'][17]}延迟${strategy_dick['2'][18]} \
+                                    ${strategy_dick['2'][22]} 前提前${strategy_dick['2'][20]}延迟${strategy_dick['2'][21]} \
+                                    强制${strategy_dick['2'][23]}秒`;
                                 }
                                     break;
                                 case '3': {
                                     tableData.strategy_text = `${strategy_dick.strategy_dick_description} \
-                                    ${strategy_dick['3'][9]} 前提前${strategy_dick['3'][10]}延迟${strategy_dick['3'][11]}} \
-                                    ${strategy_dick['3'][12]} 前提前${strategy_dick['3'][13]}延迟${strategy_dick['3'][14]}} \
-                                    ${strategy_dick['3'][15]} 前提前${strategy_dick['3'][16]}延迟${strategy_dick['3'][17]}} \
-                                    强制${strategy_dick['3'][18]}秒`;
+                                    ${strategy_dick['2'][16]} 前提前${strategy_dick['2'][14]}延迟${strategy_dick['2'][15]} \
+                                    ${strategy_dick['2'][19]} 前提前${strategy_dick['2'][17]}延迟${strategy_dick['2'][18]} \
+                                    ${strategy_dick['2'][22]} 前提前${strategy_dick['2'][20]}延迟${strategy_dick['2'][21]} \
+                                    强制${strategy_dick['2'][23]}秒`;
                                 }
                                     break;
                             }
