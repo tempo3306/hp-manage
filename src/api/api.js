@@ -13,7 +13,6 @@ const CancelToken = axios.CancelToken;
 
 //请求拦截器
 axios.interceptors.request.use(config => {
-    //发起请求时，取消掉当前正在进行的相同请求
     config.headers.Authorization = `JWT ${store.state.token}`;
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded';  //提交的数据按照 key1=val1&key2=val2 的方式进行编码，key 和 val 都进行了 URL 转码
     config.headers['X-Requested-With'] = 'XMLHttpRequest';
@@ -25,6 +24,7 @@ axios.interceptors.request.use(config => {
 
     NProgress.start();
 
+    //发起请求时，取消掉当前正在进行的相同请求
     if (promiseArr[config.url]) {
         promiseArr[config.url]('操作取消');
         promiseArr[config.url] = cancel;
@@ -105,6 +105,9 @@ export default {
             // data: JSON.stringify(data),
             data: qs.stringify(data),
             timeout: 30000,
+            cancelToken: new CancelToken(c => {
+                cancel = c;
+            })
         }).then(checkStatus).then(checkCode);
     },
     get(url, params) {
@@ -113,6 +116,9 @@ export default {
             url: baseUrl + url,
             params: params,
             timeout: 30000,
+            cancelToken: new CancelToken(c => {
+                cancel = c;
+            })
         }).then(checkStatus).then(checkCode);
     },
     patch(url, data) {
@@ -123,6 +129,9 @@ export default {
             data: qs.stringify(data),
             // data: JSON.stringify(data),
             timeout: 30000,
+            cancelToken: new CancelToken(c => {
+                cancel = c;
+            })
         }).then(checkStatus).then(checkCode);
     },
     delete(url) {
@@ -130,6 +139,9 @@ export default {
             method: 'delete',
             url: baseUrl + url,
             timeout: 30000,
+            cancelToken: new CancelToken(c => {
+                cancel = c;
+            })
         }).then(checkStatus).then(checkCode);
     },
 };

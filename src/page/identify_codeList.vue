@@ -3,9 +3,9 @@
         <head-top></head-top>
         <div class="table_container" style="padding-top: 10px">
             <div class="filter-container" style="padding-bottom: 45px">
-                <el-button class="filter-item" type="primary" :loading="downloadLoading"
-                           style="margin-left: 10px; float: right"
-                           v-waves icon="el-icon-download" @click="handleDownload">导出
+                <el-button :loading="downloadLoading" icon="el-icon-download"
+                           style="margin-left: 10px; float: right" type="primary"
+                           @click="handleDownload">导出
                 </el-button>
                 <el-select @change='handleFilter' style="width: 140px;float: right" class="filter-item"
                            v-model="listQuery.sort">
@@ -542,11 +542,11 @@
                         if (strategy_dick) {
                             let strategy_type = strategy_dick['strategy_type']; //0  1   2   3
                             tableData.strategy_dick = strategy_dick;
-                            console.log("fdsfsdf", strategy_type);
+                            console.log('fdsfsdf', strategy_type);
                             switch (strategy_type) {
                                 case '0': {
                                     tableData.strategy_text = strategy_dick.strategy_description +
-                                        `第一枪 ${strategy_dick['2'][1]} 加 ${strategy_dick['2'][2]}\
+                                        `第一枪 ${strategy_dick['2'][1]} 加 ${strategy_dick['2'][2]} \
                                         提前${strategy_dick['2'][3]}延迟${strategy_dick['2'][4]} \
                                         强制${strategy_dick['2'][5]}`;
                                 }
@@ -556,8 +556,8 @@
                                         `第一枪 ${strategy_dick['2'][1]} 加 ${strategy_dick['2'][2]}\
                                     提前${strategy_dick['2'][3]}延迟${strategy_dick['2'][4]} \
                                     强制${strategy_dick['2'][5]} \
-                                    第二枪 ${strategy_dick['2'][8]} 加 ${strategy_dick['2'][9]}\\
-                                    提前${strategy_dick['2'][10]}延迟${strategy_dick['2'][11]} \\
+                                    第二枪 ${strategy_dick['2'][8]} 加 ${strategy_dick['2'][9]}\
+                                    提前${strategy_dick['2'][10]}延迟${strategy_dick['2'][11]} \
                                     强制${strategy_dick['2'][12]}`;
                                 }
                                     break;
@@ -626,19 +626,18 @@
                 // })
             },
             handleDownload() {
-                //     this.downloadLoading = true;
-                //     import('@/vendor/Export2Excel').then(excel => {
-                //         const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-                //         const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-                //         const data = this.formatJson(filterVal, this.list)
-                //         excel.export_json_to_excel({
-                //             header: tHeader,
-                //             data,
-                //             filename: 'table-list'
-                //         })
-                //         this.downloadLoading = false
-                //     })
-                // },
+                this.downloadLoading = true;
+                import('@/utils/Export2Excel').then(excel => {
+                    const tHeader = ['id', 'bid_name', 'identify_code', 'purchase_date_str', 'expired_date_str', 'auction_name'];
+                    const filterVal = ['id', 'bid_name', 'identify_code', 'purchase_date_str', 'expired_date_str', 'auction_name'];
+                    const data = this.formatJson(filterVal, this.tableData);
+                    excel.export_json_to_excel({
+                        header: tHeader,
+                        data,
+                        filename: 'table-list'
+                    });
+                    this.downloadLoading = false;
+                });
             },
             submitForm(formName) {
                 this.selectTable.strategy = [];
@@ -692,7 +691,7 @@
             changeStrategy() {
                 this.strategyVisable = true;
                 console.log(this.strategyTable);
-                //
+
             },
             //策略对话框确认
             closeStrategy() {
@@ -766,10 +765,18 @@
                     console.log(stragtegy);
                     return JSON.parse(stragtegy);
                 }
+            },
+            formatJson(filterVal, jsonData) {
+                return jsonData.map(v => filterVal.map(j => {
+                    if (j === 'timestamp') {
+                        return parseTime(v[j]);
+                    } else {
+                        return v[j];
+                    }
+                }));
             }
         }
     };
-
 
 </script>
 
