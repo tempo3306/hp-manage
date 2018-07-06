@@ -15,11 +15,17 @@
                 <el-input @keyup.enter.native="handleFilter" style="width: 140px;float: right" class="filter-item"
                           :placeholder="label.search" v-model="listQuery.search">
                 </el-input>
+                <div class="icon-button">
+                    <i class="el-icon-refresh" style="width: 40px;float: right;margin-top:4px"
+                       v-waves @click="refreshData"></i>
+                </div>
+
             </div>
             <el-table
                 :data="tableData"
                 style="width: 100%"
-                height="700">   <!--固定表头-->
+                height="700"
+                highlight-current-row>   <!--固定表头-->
                 <el-table-column type="expand">
                     <template scope="props">
                         <el-form label-position="left" inline class="demo-table-expand">
@@ -32,23 +38,23 @@
 
                 <el-table-column v-for="item in itemtables"
                                  :label="item.label"
-                                 :prop="item.key">
+                                 :prop="item.key" :min-width="item.width" style="text-align: center">
                 </el-table-column>
 
-                <el-table-column label="操作" width="200">
+                <el-table-column label="操作" width="250px">
                     <!--scope 对 父元素遍历，scope返回的值是slot标签上返回的所有属性值，并且是一个对象的形式保存起来，获取的是一个对象-->
                     <template scope="scope">
                         <el-button
-                            size="mini"
+                            size="mini" v-waves
                             @click="handleEdit(scope.$index, scope.row)">编辑
                         </el-button>
                         <el-button
-                            size="mini"
+                            size="mini" v-waves
                             type="Success"
                             @click="handleAdd(scope.$index, scope.row)">添加
                         </el-button>
                         <el-button
-                            size="mini"
+                            size="mini" v-waves
                             type="danger"
                             @click="handleDelete(scope.$index, scope.row)">删除
                         </el-button>
@@ -68,7 +74,7 @@
                 </el-pagination>
             </div>
 
-            <el-dialog title="修改标书信息" width="30%" v-model="dialogFormVisible">
+            <el-dialog title="修改标书信息" width="30%" :visible.sync="dialogFormVisible">
                 <el-form :model="selectTable" :rules="rules" ref="selectTable">
                     <el-form-item label="标书说明" label-width="100px" prop="description">
                         <el-col :span="18">
@@ -138,8 +144,6 @@
         deleteAuction,
     } from '@/api/hpData';
     import waves from '@/directive/waves'; // 水波纹指令
-
-
     export default {
         directives: {
             waves
@@ -204,16 +208,17 @@
                 selectedCategory: [],
                 address: {},
                 downloadLoading: false,
+                refreshIng: false,
                 itemtables: [
-                    {label: 'ID', key: 'id'},
-                    {label: '标书说明', key: 'description'},
-                    {label: '标书姓名', key: 'auction_name'},
-                    {label: '身份证号', key: 'ID_number'},
-                    {label: '标书号', key: 'Bid_number'},
-                    {label: '标书密码', key: 'Bid_password'},
-                    {label: '标书状态', key: 'status'},
-                    {label: '参拍次数', key: 'count'},
-                    {label: '过期时间', key: 'expired_date_str'},
+                    {label: 'ID', key: 'id', width: '50px'},
+                    {label: '标书说明', key: 'description', width: '150px'},
+                    {label: '标书姓名', key: 'auction_name', width: '90px'},
+                    {label: '身份证号', key: 'ID_number', width: '175px'},
+                    {label: '标书号', key: 'Bid_number', width: '110px'},
+                    {label: '标书密码', key: 'Bid_password', width: '100px'},
+                    {label: '标书状态', key: 'status', width: '135px'},
+                    {label: '参拍次数', key: 'count', width: '90px'},
+                    {label: '过期时间', key: 'expired_date_str', width: '120px'},
                 ],
                 statusOptions: [
                     {label: '未中标结束交易', key: '未中标结束交易'},
@@ -269,16 +274,22 @@
                 }
             },
             async getAuction() {
+                this.refreshIng = true;
                 console.log(this.listQuery);
                 const res = await getAuction({
                     page: this.listQuery.page, limit: this.listQuery.limit,
                     format: 'json', search: this.listQuery.search, sort: this.listQuery.sort,
                     available: 0
                 });
-                if (res.status >= 400) {
+                if (res.status === 401) {
+                    this.refreshIng = false;
                     this.$router.push('login');
+                    this.$message({
+                        type: 'error',
+                        message: '请重新登录'
+                    })
                 }
-                else if (res.status === 200) ;
+                else if (res.status === 200)
                 {
                     this.tableData = [];
                     this.count = res.data.count;
@@ -296,6 +307,9 @@
                         tableData.expired_date_str = item.expired_date;
                         this.tableData.push(tableData);
                     });
+                }
+                else{
+                    this.refreshIng = false;
                 }
             },
             handleSizeChange(val) {
@@ -320,19 +334,18 @@
                 // })
             },
             handleDownload() {
-                //     this.downloadLoading = true;
-                //     import('@/vendor/Export2Excel').then(excel => {
-                //         const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-                //         const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-                //         const data = this.formatJson(filterVal, this.list)
-                //         excel.export_json_to_excel({
-                //             header: tHeader,
-                //             data,
-                //             filename: 'table-list'
-                //         })
-                //         this.downloadLoading = false
-                //     })
-                // },
+                this.downloadLoading = true;
+                import('@/utils/Export2Excel').then(excel => {
+                    const tHeader = ['id', 'description', 'auction_name', 'ID_number', 'Bid_password', 'status', 'count', 'expired_date_str'];
+                    const filterVal = ['id', 'description', 'auction_name', 'ID_number', 'Bid_password', 'status', 'count', 'expired_date_str'];
+                    const data = this.formatJson(filterVal, this.tableData);
+                    excel.export_json_to_excel({
+                        header: tHeader,
+                        data,
+                        filename: 'table-list-auction'
+                    });
+                    this.downloadLoading = false;
+                });
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
@@ -349,6 +362,7 @@
                 });
             },
             handleEdit(index, row) {
+                console.log('ff3');
                 this.selectTable = Object.assign({}, row); //深拷贝
                 this.dialogFormVisible = true;  //弹出对话框
             },
@@ -445,7 +459,10 @@
             },
             cancelData() {
                 this.dialogFormVisible = false;
-            }
+            },
+            refreshData() {
+                this.getAuction();
+            },
         }
     };
 
@@ -510,4 +527,7 @@
     .el-dialog--small {
         width: 30%;
     }
+
+
+
 </style>

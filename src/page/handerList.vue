@@ -5,7 +5,7 @@
             <div class="filter-container" style="padding-bottom: 45px">
                 <el-button class="filter-item" type="primary" :loading="downloadLoading"
                            style="margin-left: 10px; float: right"
-                            icon="el-icon-download" @click="handleDownload">导出
+                           icon="el-icon-download" @click="handleDownload">导出
                 </el-button>
                 <el-select @change='handleFilter' style="width: 140px;float: right" class="filter-item"
                            v-model="listQuery.sort">
@@ -15,12 +15,16 @@
                 <el-input @keyup.enter.native="handleFilter" style="width: 140px;float: right" class="filter-item"
                           :placeholder="label.search" v-model="listQuery.search">
                 </el-input>
+                <div class="icon-button">
+                    <i class="el-icon-refresh" style="width: 40px;float: right;margin-top:4px" @click="refreshData"></i>
+                </div>
                 <!--<el-button type="primary" icon="el-icon-delete"></el-button>-->
             </div>
             <el-table
                 :data="tableData"
                 style="width: 100%"
-                height="700">   <!--固定表头-->
+                height="700"
+                highlight-current-row>   <!--固定表头-->
                 <el-table-column type="expand">
                     <template scope="props">
                         <el-form label-position="left" inline class="demo-table-expand">
@@ -52,10 +56,14 @@
                     prop="basic_salary">
                 </el-table-column>
                 <el-table-column
+                label="中标奖金"
+                prop="extra_bonus">
+                </el-table-column>
+                <el-table-column
                     label="累计收入"
                     prop="total_income">
                 </el-table-column>
-                <el-table-column label="操作" width="200">
+                <el-table-column label="操作" width="300px">
                     <!--scope 对 父元素遍历，scope返回的值是slot标签上返回的所有属性值，并且是一个对象的形式保存起来，获取的是一个对象-->
                     <template scope="scope">
                         <el-button
@@ -87,7 +95,7 @@
                     :total="count">
                 </el-pagination>
             </div>
-            <el-dialog title="修改拍手信息" width="30%" v-model="dialogFormVisible">
+            <el-dialog title="修改拍手信息" width="30%" :visible.sync="dialogFormVisible">
                 <el-form :model="selectTable" :rules="rules" ref="selectTable">
                     <el-form-item label="拍手姓名" label-width="100px" prop="hander_name">
                         <el-col :span="18">
@@ -96,12 +104,14 @@
                     </el-form-item>
                     <el-form-item label="底薪" label-width="100px" prop="basic_salary">
                         <el-col :span="18">
-                            <el-input type="number" v-model.number="selectTable.basic_salary" auto-complete="off"></el-input>
+                            <el-input type="number" v-model.number="selectTable.basic_salary"
+                                      auto-complete="off"></el-input>
                         </el-col>
                     </el-form-item>
                     <el-form-item label="累计收入" label-width="100px" prop="total_income">
                         <el-col :span="18">
-                            <el-input  type="number" v-model.number="selectTable.total_income" auto-complete="off"></el-input>
+                            <el-input type="number" v-model.number="selectTable.total_income"
+                                      auto-complete="off"></el-input>
                         </el-col>
                     </el-form-item>
                 </el-form>
@@ -168,7 +178,7 @@
                 selectedCategory: [],
                 address: {},
                 downloadLoading: false,
-
+                refreshIng: false,
                 rules: {
                     hander_name: [
                         {required: true, message: '请输入名称', trigger: 'blur'},
@@ -205,11 +215,15 @@
                     page: this.listQuery.page, limit: this.listQuery.limit,
                     format: 'json', search: this.listQuery.search, sort: this.listQuery.sort
                 });
-                if (handers.status >= 400) {
+                if (handers.status === 401) {
+                    this.refreshIng = false;
                     this.$router.push('login');
+                    this.$message({
+                        type: 'error',
+                        message: '请重新登录'
+                    });
                 }
-                else if (handers.status === 200) ;
-                {
+                else if (handers.status === 200) {
                     this.tableData = [];
                     this.count = handers.data.count;
                     handers.data.rows.forEach(item => {
@@ -218,9 +232,13 @@
                         tableData.hander_name = item.hander_name;
                         tableData.basic_salary = item.basic_salary;
                         tableData.total_income = item.total_income;
+                        tableData.extra_bonus = item.extra_bonus;
                         this.tableData.push(tableData);
                     });
                     console.log(this.tableData);
+                }
+                else {
+                    this.refreshIng = false;
                 }
             },
             handleSizeChange(val) {
@@ -248,19 +266,18 @@
                 // })
             },
             handleDownload() {
-                //     this.downloadLoading = true;
-                //     import('@/vendor/Export2Excel').then(excel => {
-                //         const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-                //         const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-                //         const data = this.formatJson(filterVal, this.list)
-                //         excel.export_json_to_excel({
-                //             header: tHeader,
-                //             data,
-                //             filename: 'table-list'
-                //         })
-                //         this.downloadLoading = false
-                //     })
-                // },
+                this.downloadLoading = true;
+                import('@/utils/Export2Excel').then(excel => {
+                    const tHeader = ['id', 'hander_name', 'basic_salary', 'total_income'];
+                    const filterVal = ['id', 'hander_name', 'basic_salary', 'total_income'];
+                    const data = this.formatJson(filterVal, this.tableData);
+                    excel.export_json_to_excel({
+                        header: tHeader,
+                        data,
+                        filename: 'table-list-auction'
+                    });
+                    this.downloadLoading = false;
+                });
             },
             submitForm(formName) {
                 console.log(this.selectTable);
@@ -363,12 +380,18 @@
                     this.$message({
                         type: 'error',
                         message: err
-                    })
+                    });
                 }
             },
             cancelData() {
                 this.dialogFormVisible = false;
-            }
+            },
+            refreshData() {
+                console.log(this.refreshIng);
+                if (!this.refreshIng){
+                    this.getHander();
+                }
+            },
         }
     };
 

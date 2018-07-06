@@ -15,11 +15,14 @@
                 <el-input @keyup.enter.native="handleFilter" style="width: 140px;float: right" class="filter-item"
                           :placeholder="label.search" v-model="listQuery.search">
                 </el-input>
+                <div class="icon-button">
+                    <i class="el-icon-refresh" style="width: 40px;float: right;margin-top:4px" @click="refreshData"></i>
+                </div>
             </div>
             <el-table
                 :data="tableData"
-                style="width: 100%"
-                height="700">   <!--固定表头-->
+                height="700" fit highlight-current-row>   <!--固定表头-->
+
                 <el-table-column type="expand">
                     <template scope="props">
                         <el-form label-position="left" inline class="demo-table-expand">
@@ -61,7 +64,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                    label="ID"
+                    label="ID" width="50px"
                     prop="id">
                 </el-table-column>
                 <el-table-column
@@ -84,7 +87,7 @@
                     label="标书"
                     prop="auction_name">
                 </el-table-column>
-                <el-table-column label="操作" width="200">
+                <el-table-column label="操作" width="350px">
                     <!--scope 对 父元素遍历，scope返回的值是slot标签上返回的所有属性值，并且是一个对象的形式保存起来，获取的是一个对象-->
                     <template scope="scope">
                         <el-button
@@ -116,7 +119,7 @@
                     :total="count">
                 </el-pagination>
             </div>
-            <el-dialog title="修改激活码信息" width="30%" v-model="dialogFormVisible">
+            <el-dialog title="修改激活码信息" width="30%" :visible.sync="dialogFormVisible">
                 <el-form :model="selectTable" :rules="rules" ref="selectTable">
                     <el-form-item label="名称" label-width="100px" prop="bid_name">
                         <el-col :span="18">
@@ -166,7 +169,7 @@
                 </div>
             </el-dialog>
             <!--策略 -->
-            <el-dialog title="修改策略" width="30%" v-model="strategyVisable">
+            <el-dialog title="修改策略" width="30%" :visible.sync="strategyVisable">
                 <el-form :model="strategyTable" :rules="rules" ref="strategyTable">
                     <el-form-item>
                         <el-select @change="showstrategy" v-model="strategyTable.strategytype">
@@ -463,6 +466,7 @@
                 selectedCategory: [],
                 address: {},
                 downloadLoading: false,
+                refreshIng: false,
                 change_identify_code: false,
 
                 rules: {
@@ -496,16 +500,22 @@
             },
 
             async getIdentify_code() {
+                this.refreshIng = true;
                 console.log(this.listQuery);
                 const identify_codes = await getIdentify_code({
                     page: this.listQuery.page, limit: this.listQuery.limit,
                     format: 'json', search: this.listQuery.search, sort: this.listQuery.sort
                 });
-                if (identify_codes.status >= 400) {
+                if (identify_codes.status === 401) {
+                    this.refreshIng = false;
                     this.$router.push('login');
-                }
-                else if (identify_codes.status === 200) ;
+                    this.$message({
+                        type: 'error',
+                        message: '请重新登录'
+                    })                }
+                else if (identify_codes.status === 200)
                 {
+                    this.refreshIng =false;
                     this.tableData = [];
                     this.count = identify_codes.data.count;
                     identify_codes.data.rows.forEach(item => {
@@ -585,6 +595,9 @@
                         this.tableData.push(tableData);
                     });
                 }
+                else{
+                    this.refreshIng = false;
+                }
             },
             async getAuctionOption() {
                 const res = await getAuction({
@@ -639,6 +652,20 @@
                     this.downloadLoading = false;
                 });
             },
+            handleDownload() {
+                this.downloadLoading = true;
+                import('@/utils/Export2Excel').then(excel => {
+                    const tHeader = ['id', 'bid_name', 'identify_code', 'purchase_date_str', 'expired_date_str', 'auction_name'];
+                    const filterVal = ['id', 'bid_name', 'identify_code', 'purchase_date_str', 'expired_date_str', 'auction_name'];
+                    const data = this.formatJson(filterVal, this.tableData);
+                    excel.export_json_to_excel({
+                        header: tHeader,
+                        data,
+                        filename: 'table-list'
+                    });
+                    this.downloadLoading = false;
+                });
+            },
             submitForm(formName) {
                 this.selectTable.strategy = [];
                 for (let key in this.strategyTable) {
@@ -663,6 +690,11 @@
                     }
                 });
 
+            },
+            refreshData() {
+                if (!this.refreshIng){
+                    this.getIdentify_code();
+                }
             },
             handleEdit(index, row) {
                 this.selectTable = Object.assign({}, row); //深拷贝
