@@ -19,7 +19,6 @@
                     <i class="el-icon-refresh" style="width: 40px;float: right;margin-top:4px"
                        v-waves @click="refreshData"></i>
                 </div>
-
             </div>
             <el-table
                 :data="tableData"
@@ -29,8 +28,8 @@
                 <el-table-column type="expand">
                     <template scope="props">
                         <el-form label-position="left" inline class="demo-table-expand">
-                            <el-form-item label="ID">
-                                <span>{{ props.row.id }}</span>
+                            <el-form-item label="策略">
+                                <span>{{ props.row.strategy_text }}</span>
                             </el-form-item>
                         </el-form>
                     </template>
@@ -81,9 +80,9 @@
                             <el-input v-model="selectTable.description" auto-complete="off"></el-input>
                         </el-col>
                     </el-form-item>
-                    <el-form-item label="标书姓名" label-width="100px" prop="auction_name">
+                    <el-form-item label="标书姓名" label-width="100px" prop="Record_name">
                         <el-col :span="18">
-                            <el-input v-model="selectTable.auction_name" auto-complete="off"></el-input>
+                            <el-input v-model="selectTable.Record_name" auto-complete="off"></el-input>
                         </el-col>
                     </el-form-item>
                     <el-form-item label="身份证号" label-width="100px" prop="ID_number">
@@ -138,10 +137,10 @@
     import headTop from '@/components/headTop';
     import {baseUrl, baseImgPath} from '@/config/env';
     import {
-        getAuction,
-        addAuction,
-        updateAuction,
-        deleteAuction,
+        getRecord,
+        addRecord,
+        updateRecord,
+        deleteRecord,
     } from '@/api/hpData';
     import waves from '@/directive/waves'; // 水波纹指令
     export default {
@@ -211,15 +210,15 @@
                 refreshIng: false,
                 itemtables: [
                     {label: 'ID', key: 'id', width: '50px'},
-                    {label: '标书说明', key: 'description', width: '150px'},
-                    {label: '标书姓名', key: 'auction_name', width: '90px'},
-                    {label: '身份证号', key: 'ID_number', width: '175px'},
+                    {label: '日期', key: 'date', width: '150px'},
+                    {label: '拍手姓名', key: 'hander_name', width: '90px'},
+                    {label: '标书姓名', key: 'auction_name', width: '175px'},
                     {label: '标书号', key: 'Bid_number', width: '110px'},
-                    {label: '标书密码', key: 'Bid_password', width: '100px'},
-                    {label: '标书状态', key: 'status', width: '135px'},
-                    {label: '参拍次数', key: 'count', width: '90px'},
-                    {label: '过期时间', key: 'expired_date_str', width: '120px'},
+                    {label: '结果', key: 'result', width: '100px'},
                 ],
+
+
+
                 statusOptions: [
                     {label: '未中标结束交易', key: '未中标结束交易'},
                     {label: '中标完成交易', key: '中标完成交易'},
@@ -232,7 +231,7 @@
                         {required: true, message: '请输入标书描述', trigger: 'blur'},
                         {min: 2, max: 15, message: '长度在 2 到 15 个字符', trigger: 'blur'}
                     ],
-                    auction_name: [
+                    Record_name: [
                         {required: true, message: '请输入姓名', trigger: 'blur'},
                         {min: 2, max: 4, message: '长度在 2 到 4 个字符', trigger: 'blur'}
                     ],
@@ -267,16 +266,16 @@
         methods: {
             async initData() {
                 try {
-                    this.getAuction();
+                    this.getRecord();
 
                 } catch (err) {
                     console.log('获取数据失败', err);
                 }
             },
-            async getAuction() {
+            async getRecord() {
                 this.refreshIng = true;
                 console.log(this.listQuery);
-                const res = await getAuction({
+                const res = await getRecord({
                     page: this.listQuery.page, limit: this.listQuery.limit,
                     format: 'json', search: this.listQuery.search, sort: this.listQuery.sort,
                     available: 0
@@ -295,17 +294,61 @@
                     this.count = res.data.count;
                     res.data.rows.forEach(item => {
                         const tableData = {};
-                        tableData.id = item.id;  // 描述来源
-                        tableData.description = item.description;  // 描述来源
+                        tableData.id = item.id;
+                        tableData.date = item.date;
+                        // tableData.date_str = new Date(item.date.replace(/-/g, '/'));   // 过期时间
+                        tableData.hander_name = item.hander_name;  // 描述来源
                         tableData.auction_name = item.auction_name; // 标书姓名
-                        tableData.ID_number = item.ID_number;  // 身份证号
-                        tableData.Bid_number = item.Bid_number;  // 标书号
-                        tableData.Bid_password = item.Bid_password;  // 密码
-                        tableData.status = item.status;  // 标书状态
-                        tableData.count = item.count; // 参拍次数
-                        tableData.expired_date = new Date(item.expired_date.replace(/-/g, '/'));   // 过期时间
-                        tableData.expired_date_str = item.expired_date;
+                        tableData.Bid_number = item.Bid_number;  // 身份证号
+                        tableData.result = item.result;  // 身份证号
+                        let strategy_dick = this.handlestrategy(item.strategy_dick);  // 策略
                         this.tableData.push(tableData);
+                        if (strategy_dick) {
+                            let strategy_type = strategy_dick['strategy_type']; //0  1   2   3
+                            tableData.strategy_dick = strategy_dick;
+                            console.log('fdsfsdf', strategy_type);
+                            switch (strategy_type) {
+                                case '0': {
+                                    tableData.strategy_text = strategy_dick.strategy_description +
+                                        `第一枪 ${strategy_dick['2'][1]} 加 ${strategy_dick['2'][2]} \
+                                        提前${strategy_dick['2'][3]}延迟${strategy_dick['2'][4]} \
+                                        强制${strategy_dick['2'][5]}`;
+                                }
+                                    break;
+                                case '1': {
+                                    tableData.strategy_text = strategy_dick.strategy_description +
+                                        `第一枪 ${strategy_dick['2'][1]} 加 ${strategy_dick['2'][2]}\
+                                    提前${strategy_dick['2'][3]}延迟${strategy_dick['2'][4]} \
+                                    强制${strategy_dick['2'][5]} \
+                                    第二枪 ${strategy_dick['2'][8]} 加 ${strategy_dick['2'][9]}\
+                                    提前${strategy_dick['2'][10]}延迟${strategy_dick['2'][11]} \
+                                    强制${strategy_dick['2'][12]}`;
+                                }
+                                    break;
+                                case '2': {
+                                    tableData.strategy_text = `${strategy_dick.strategy_description} \
+                                    ${strategy_dick['2'][16]} 前提前${strategy_dick['2'][14]}延迟${strategy_dick['2'][15]} \
+                                    ${strategy_dick['2'][19]} 前提前${strategy_dick['2'][17]}延迟${strategy_dick['2'][18]} \
+                                    ${strategy_dick['2'][22]} 前提前${strategy_dick['2'][20]}延迟${strategy_dick['2'][21]} \
+                                    强制${strategy_dick['2'][23]}秒`;
+                                }
+                                    break;
+                                case '3': {
+                                    tableData.strategy_text = `${strategy_dick.strategy_dick_description} \
+                                    ${strategy_dick['2'][16]} 前提前${strategy_dick['2'][14]}延迟${strategy_dick['2'][15]} \
+                                    ${strategy_dick['2'][19]} 前提前${strategy_dick['2'][17]}延迟${strategy_dick['2'][18]} \
+                                    ${strategy_dick['2'][22]} 前提前${strategy_dick['2'][20]}延迟${strategy_dick['2'][21]} \
+                                    强制${strategy_dick['2'][23]}秒`;
+                                }
+                                    break;
+                            }
+                        }
+                        else {
+                            tableData.strategy_text = '未定义';
+                        }
+
+
+
                     });
                 }
                 else{
@@ -315,15 +358,15 @@
             handleSizeChange(val) {
                 this.listQuery.limit = val;
                 this.listQuery.page = 1;
-                this.getAuction();
+                this.getRecord();
             },
             handleCurrentChange(val) {
                 this.listQuery.page = val;
-                this.getAuction();
+                this.getRecord();
             },
             handleFilter() {
                 this.listQuery.page = 1;
-                this.getAuction();
+                this.getRecord();
             },
             handleCreate() {
                 // this.resetTemp()
@@ -336,13 +379,13 @@
             handleDownload() {
                 this.downloadLoading = true;
                 import('@/utils/Export2Excel').then(excel => {
-                    const tHeader = ['id', 'description', 'auction_name', 'ID_number', 'Bid_password', 'status', 'count', 'expired_date_str'];
-                    const filterVal = ['id', 'description', 'auction_name', 'ID_number', 'Bid_password', 'status', 'count', 'expired_date_str'];
+                    const tHeader = ['id', 'description', 'Record_name', 'ID_number', 'Bid_password', 'status', 'count', 'expired_date_str'];
+                    const filterVal = ['id', 'description', 'Record_name', 'ID_number', 'Bid_password', 'status', 'count', 'expired_date_str'];
                     const data = this.formatJson(filterVal, this.tableData);
                     excel.export_json_to_excel({
                         header: tHeader,
                         data,
-                        filename: 'table-list-auction'
+                        filename: 'table-list-Record'
                     });
                     this.downloadLoading = false;
                 });
@@ -367,13 +410,13 @@
                 this.dialogFormVisible = true;  //弹出对话框
             },
             handleAdd() {
-                this.$router.push({path: 'addAuction'});
+                this.$router.push({path: 'addRecord'});
                 // this.selectTable = Object.assign({}, row); //深拷贝
                 // this.dialogFormVisible = true;  //弹出对话框
             },
             async handleDelete(index, row) {
                 try {
-                    const res = await deleteAuction(row.id);
+                    const res = await deleteRecord(row.id);
                     if (res.status === 200) {
                         this.$message({
                             type: 'success',
@@ -394,55 +437,29 @@
                     console.log('删除店铺失败');
                 }
             },
-            // async querySearchAsync(queryString, cb) {
-            //     if (queryString) {
-            //         try {
-            //             const cityList = await searchplace(this.city.id, queryString);
-            //             if (cityList instanceof Array) {
-            //                 cityList.map(item => {
-            //                     item.value = item.address;
-            //                     return item;
-            //                 });
-            //                 cb(cityList);
-            //             }
-            //         } catch (err) {
-            //             console.log(err);
-            //         }
-            //     }
-            // },
-            // handleServiceAvatarScucess(res, file) {
-            //     if (res.status == 1) {
-            //         this.selectTable.image_path = res.image_path;
-            //     } else {
-            //         this.$message.error('上传图片失败！');
-            //     }
-            // },
-            // beforeAvatarUpload(file) {
-            //     const isRightType = (file.type === 'image/jpeg') || (file.type === 'image/png');
-            //     const isLt2M = file.size / 1024 / 1024 < 2;
-            //
-            //     if (!isRightType) {
-            //         this.$message.error('上传头像图片只能是 JPG 格式!');
-            //     }
-            //     if (!isLt2M) {
-            //         this.$message.error('上传头像图片大小不能超过 2MB!');
-            //     }
-            //     return isRightType && isLt2M;
-            // },
+            handlestrategy(stragtegy) {
+                if (stragtegy == 'none') {
+                    return null;
+                }
+                else {
+                    console.log(stragtegy);
+                    return JSON.parse(stragtegy);
+                }
+            },
             async updateData() {
                 this.dialogFormVisible = false;
                 try {
                     console.log(this.selectTable);
                     this.selectTable.expired_date = this.selectTable.expired_date.ymd();
                     delete this.selectTable.expired_date_str;
-                    const res = await updateAuction(this.selectTable.id, this.selectTable);
+                    const res = await updateRecord(this.selectTable.id, this.selectTable);
                     console.log(res.status);
                     if (res.status === 200) {
                         this.$message({
                             type: 'success',
                             message: '更新标书信息成功'
                         });
-                        this.getAuction();
+                        this.getRecord();
                     } else {
                         this.$message({
                             type: 'error',
@@ -461,7 +478,7 @@
                 this.dialogFormVisible = false;
             },
             refreshData() {
-                this.getAuction();
+                this.getRecord();
             },
         }
     };

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/page/identify_codeList.vue" line="575" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/src/page/identify_codeList.vue" line="580" mnemonic="3" />
     <bookmark url="file://$PROJECT_DIR$/src/page/handerList.vue" line="270" mnemonic="2" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e1e3923-3498-4809-8688-c79afe8cb494" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/page/recordList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/hpData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/hpData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/page/auctionList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/auctionList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/page/handerList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/handerList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/page/identify_codeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/identify_codeList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/page/manage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/manage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style/common.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/common.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,41 +28,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="identify_codeList.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="identify_codeList.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/page/identify_codeList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="601" column="29" lean-forward="true" selection-start-line="601" selection-start-column="29" selection-end-line="601" selection-end-column="29" />
+            <state relative-caret-position="639">
+              <caret line="87" column="36" selection-start-line="87" selection-start-column="26" selection-end-line="87" selection-end-column="36" />
               <folding>
                 <element signature="n#style#0;n#el-button#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#el-select#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#20881#20924#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="auctionList.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/page/auctionList.vue">
+      <file leaf-file-name="recordList.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/page/recordList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
-              <caret line="312" column="2" selection-start-line="312" selection-start-column="2" selection-end-line="312" selection-end-column="2" />
+            <state relative-caret-position="-367">
+              <caret line="71" column="35" lean-forward="true" selection-start-line="71" selection-start-column="35" selection-end-line="71" selection-end-column="35" />
               <folding>
-                <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#el-table-column#1;n#el-table#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="handerList.vue" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/page/handerList.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="397" lean-forward="true" selection-start-line="397" selection-end-line="397" />
-              <folding>
-                <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#el-date-picker#0;n#el-form-item#0;n#el-col#0;n#el-form-item#7;n#el-form#0;n#el-dialog#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -80,15 +66,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>rgb(50, 64, 87)</find>
-      <find>}}</find>
-      <find>handleDownload</find>
-      <find>downloadLoading</find>
-      <find>saveAs</find>
-      <find>cancel</find>
-      <find>icon</find>
-      <find>element</find>
-      <find>index.css</find>
       <find>编辑</find>
       <find>正常进行</find>
       <find>scrip</find>
@@ -110,10 +87,20 @@
       <find>getAuc</find>
       <find>this</find>
       <find>getH</find>
+      <find>table</find>
+      <find>操作</find>
+      <find>300px</find>
+      <find>Auction</find>
+      <find>getr</find>
+      <find>getRecord</find>
+      <find>date</find>
+      <find>strategy</find>
+      <find>tabledata</find>
     </findStrings>
     <replaceStrings>
       <replace>data.count</replace>
       <replace>数据管理</replace>
+      <replace>Record</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -141,9 +128,7 @@
         <option value="$PROJECT_DIR$/src/store/types.js" />
         <option value="$PROJECT_DIR$/src/api/hpApi.js" />
         <option value="$PROJECT_DIR$/src/store/index.js" />
-        <option value="$PROJECT_DIR$/src/api/hpData.js" />
         <option value="$PROJECT_DIR$/src/page/home.vue" />
-        <option value="$PROJECT_DIR$/src/router/index.js" />
         <option value="$PROJECT_DIR$/src/components/headTop.vue" />
         <option value="$PROJECT_DIR$/src/components/forumTable.vue" />
         <option value="$PROJECT_DIR$/build/build.js" />
@@ -155,14 +140,17 @@
         <option value="$PROJECT_DIR$/src/page/login.vue" />
         <option value="$PROJECT_DIR$/src/style/mixin.less" />
         <option value="$PROJECT_DIR$/src/utils/Export2Excel.js" />
-        <option value="$PROJECT_DIR$/src/api/api.js" />
         <option value="$PROJECT_DIR$/src/main.js" />
-        <option value="$PROJECT_DIR$/src/page/manage.vue" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/style/common.less" />
-        <option value="$PROJECT_DIR$/src/page/identify_codeList.vue" />
         <option value="$PROJECT_DIR$/src/page/auctionList.vue" />
         <option value="$PROJECT_DIR$/src/page/handerList.vue" />
+        <option value="$PROJECT_DIR$/src/api/hpData.js" />
+        <option value="$PROJECT_DIR$/src/router/index.js" />
+        <option value="$PROJECT_DIR$/src/page/manage.vue" />
+        <option value="$PROJECT_DIR$/src/api/api.js" />
+        <option value="$PROJECT_DIR$/src/page/recordList.vue" />
+        <option value="$PROJECT_DIR$/src/page/identify_codeList.vue" />
       </list>
     </option>
   </component>
@@ -222,7 +210,19 @@
               <item name="hp-manage" type="b2602c69:ProjectViewProjectNode" />
               <item name="hp-manage" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="hp-manage" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hp-manage" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="page" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="hp-manage" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hp-manage" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="router" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="hp-manage" type="b2602c69:ProjectViewProjectNode" />
@@ -244,7 +244,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="fo&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/components/forumTable.vue&#10;han&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/page/handerList.vue&#10;pack&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/package.json&#10;mana&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/page/manage.vue&#10;auct&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/page/auctionList.vue&#10;manage&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/page/manage.vue&#10;main&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/main.js&#10;main.js&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/main.js&#10;HEADTO&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/components/headTop.vue&#10;man&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/page/manage.vue&#10;head&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/components/headTop.vue&#10;login&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/page/login.vue&#10;fetch&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/config/fetch.js&#10;route.js&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/node_modules/express/lib/router/route.js&#10;login.&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/page/login.vue&#10;list&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/page/identify_codeList.vue&#10;logi&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/page/login.vue&#10;proxyTa&#9;null&#9;null&#10;fetch.js&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/config/fetch.js&#10;store&#9;null&#9;null&#10;proxyT&#9;null&#9;null&#10;fetc&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/config/fetch.js&#10;get&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/api/getData.js&#10;index&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/router/index.js&#10;manag&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/page/manage.vue" />
+    <property name="SearchEverywhereHistoryKey" value="iden&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/page/identify_codeList.vue&#10;api.&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/api/api.js&#10;mana&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/page/manage.vue&#10;router&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/router&#10;fo&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/components/forumTable.vue&#10;han&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/page/handerList.vue&#10;pack&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/package.json&#10;auct&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/page/auctionList.vue&#10;manage&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/page/manage.vue&#10;main&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/main.js&#10;main.js&#9;FILE&#9;file:///Users/zs/Projects/myweb/hp-manage/src/main.js&#10;HEADTO&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/components/headTop.vue&#10;man&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/page/manage.vue&#10;head&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/components/headTop.vue&#10;login&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/page/login.vue&#10;fetch&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/config/fetch.js&#10;route.js&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/node_modules/express/lib/router/route.js&#10;login.&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/page/login.vue&#10;list&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/page/identify_codeList.vue&#10;logi&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/page/login.vue&#10;proxyTa&#9;null&#9;null&#10;fetch.js&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/config/fetch.js&#10;store&#9;null&#9;null&#10;proxyT&#9;null&#9;null&#10;fetc&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/config/fetch.js&#10;get&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/api/getData.js&#10;index&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/router/index.js&#10;manag&#9;FILE&#9;file:///Users/zs/Projects/hp-manage/src/page/manage.vue" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -259,14 +259,14 @@
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/utils" />
-      <recent name="$PROJECT_DIR$/src/api-config" />
-      <recent name="$PROJECT_DIR$/src/page" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/api-config" />
       <recent name="$PROJECT_DIR$/src" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/page" />
+      <recent name="$PROJECT_DIR$/src/utils" />
+      <recent name="$PROJECT_DIR$/src/api-config" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -305,37 +305,40 @@
       <workItem from="1530157578327" duration="228000" />
       <workItem from="1530233632673" duration="2371000" />
       <workItem from="1530713316096" duration="7647000" />
-      <workItem from="1530837513863" duration="9431000" />
+      <workItem from="1530837513863" duration="11016000" />
+      <workItem from="1530886166387" duration="2158000" />
+      <workItem from="1530918732290" duration="3110000" />
+      <workItem from="1531195612451" duration="1264000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122268000" />
+    <option name="totallyTimeSpent" value="130385000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="947" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5015069" side_tool="true" weight="0.401487" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.32889965" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4996986" weight="0.32806805" />
       <window_info id="npm" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49849308" weight="0.401487" />
-      <window_info anchor="bottom" id="TypeScript" order="8" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="CSS-X-Fire" order="9" weight="0.32889965" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49849308" weight="0.401487" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="TypeScript" order="8" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -355,27 +358,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/page/home.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="103" column="44" selection-start-line="103" selection-start-column="43" selection-end-line="103" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/hpApi.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="128" column="9" selection-start-line="128" selection-start-column="9" selection-end-line="128" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/element-ui/packages/dropdown/src/dropdown-item.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/page/addShop.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="816">
@@ -385,13 +367,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/page/addHander.vue">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1848">
-          <caret line="77" column="37" selection-start-line="77" selection-start-column="37" selection-end-line="77" selection-end-column="37" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/headTop.vue">
       <provider selected="true" editor-type-id="text-editor">
@@ -557,16 +532,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/api.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3360">
-          <caret line="147" selection-start-line="147" selection-end-line="147" />
         </state>
       </provider>
     </entry>
@@ -588,19 +553,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="488">
           <caret line="102" column="19" lean-forward="true" selection-start-line="102" selection-start-column="19" selection-end-line="102" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/page/manage.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-476">
-          <caret line="9" column="52" selection-start-line="9" selection-start-column="52" selection-end-line="9" selection-end-column="52" />
-          <folding>
-            <element signature="n#style#0;n#el-row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-col#0;n#el-row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-menu#0;n#el-col#0;n#el-row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-col#1;n#el-row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -639,30 +591,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/page/identify_codeList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="601" column="29" lean-forward="true" selection-start-line="601" selection-start-column="29" selection-end-line="601" selection-end-column="29" />
-          <folding>
-            <element signature="n#style#0;n#el-button#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-select#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#20881#20924#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/hpData.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/page/auctionList.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="312" column="2" selection-start-line="312" selection-start-column="2" selection-end-line="312" selection-end-column="2" />
+        <state relative-caret-position="1152">
+          <caret line="48" column="50" selection-start-line="48" selection-start-column="50" selection-end-line="48" selection-end-column="50" />
           <folding>
             <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#el-table-column#1;n#el-table#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -672,9 +604,71 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/page/handerList.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="397" lean-forward="true" selection-start-line="397" selection-end-line="397" />
+        <state relative-caret-position="384">
+          <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
           <folding>
+            <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/getData.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/hpApi.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/hpData.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="502">
+          <caret line="56" column="50" lean-forward="true" selection-start-line="56" selection-start-column="50" selection-end-line="56" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/page/manage.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="27" column="45" lean-forward="true" selection-start-line="27" selection-start-column="45" selection-end-line="27" selection-end-column="45" />
+          <folding>
+            <element signature="n#style#0;n#el-row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-col#0;n#el-row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-menu#0;n#el-col#0;n#el-row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-col#1;n#el-row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/api.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="98" column="17" selection-start-line="98" selection-start-column="17" selection-end-line="98" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/page/recordList.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-367">
+          <caret line="71" column="35" lean-forward="true" selection-start-line="71" selection-start-column="35" selection-end-line="71" selection-end-column="35" />
+          <folding>
+            <element signature="n#style#0;n#el-date-picker#0;n#el-form-item#0;n#el-col#0;n#el-form-item#7;n#el-form#0;n#el-dialog#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/page/identify_codeList.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="639">
+          <caret line="87" column="36" selection-start-line="87" selection-start-column="26" selection-end-line="87" selection-end-column="36" />
+          <folding>
+            <element signature="n#style#0;n#el-button#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-select#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>

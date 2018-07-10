@@ -67,15 +67,6 @@ function checkCode(res) {
     let code = res.data.code;
     if (code >= 400) {
         switch (code) {
-            case 500:
-                store.commit(types.LOGOUT);
-                // 只有在当前路由不是登录页面才跳转
-                router.currentRoute.path !== '/' &&
-                router.replace({
-                    path: '/',
-                    query: {redirect: router.currentRoute.path},
-                });
-                break;
             case 401:
                 // 401 清除token信息并跳转到登录页面
                 store.commit(types.LOGOUT);
@@ -88,6 +79,13 @@ function checkCode(res) {
                 break;
             case 400:
                 //400 代表token过期
+                store.commit(types.LOGOUT);
+                // 只有在当前路由不是登录页面才跳转
+                router.currentRoute.path !== '/' &&
+                router.replace({
+                    path: '/',
+                    query: {redirect: router.currentRoute.path},
+                });
                 console.log('token 无效');
                 break;
             default:

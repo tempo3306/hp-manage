@@ -48,7 +48,7 @@ const addIdentify_code = r => require.ensure([], () => r(require('@/page/addIden
 
 const handerList = r => require.ensure([], () => r(require('@/page/handerList')), 'handerList');
 const auctionList = r => require.ensure([], () => r(require('@/page/auctionList')), 'auctionList');
-const actionList = r => require.ensure([], () => r(require('@/page/actionList')), 'actionList');
+const recordList = r => require.ensure([], () => r(require('@/page/recordList')), 'recordList');
 const identify_codeList = r => require.ensure([], () => r(require('@/page/identify_codeList')), 'identify_codeList');
 
 
@@ -86,11 +86,11 @@ const routes = [
                     nav: ['数据管理', '查看标书'],
                 },
             }, {
-                path: '/actionList',
-                component: auctionList,
+                path: '/recordList',
+                component: recordList,
                 meta: {
                     requireAuth: true,
-                    nav: ['数据管理', '查看策略'],
+                    nav: ['数据管理', '查看记录'],
                 },
             }, {
                 path: '/identify_codeList',

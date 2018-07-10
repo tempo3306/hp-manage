@@ -20,7 +20,7 @@
                 </div>
             </div>
             <el-table
-                :data="tableData"
+                :data="tableData" align="center"
                 height="700" fit highlight-current-row>   <!--固定表头-->
 
                 <el-table-column type="expand">
@@ -84,10 +84,14 @@
                     prop="identify_code">
                 </el-table-column>
                 <el-table-column
+                    label="状态"
+                    prop="bid_status">
+                </el-table-column>
+                <el-table-column
                     label="标书"
                     prop="auction_name">
                 </el-table-column>
-                <el-table-column label="操作" width="350px">
+                <el-table-column label="操作" width="220px">
                     <!--scope 对 父元素遍历，scope返回的值是slot标签上返回的所有属性值，并且是一个对象的形式保存起来，获取的是一个对象-->
                     <template scope="scope">
                         <el-button
@@ -512,10 +516,10 @@
                     this.$message({
                         type: 'error',
                         message: '请重新登录'
-                    })                }
-                else if (identify_codes.status === 200)
-                {
-                    this.refreshIng =false;
+                    });
+                }
+                else if (identify_codes.status === 200) {
+                    this.refreshIng = false;
                     this.tableData = [];
                     this.count = identify_codes.data.count;
                     identify_codes.data.rows.forEach(item => {
@@ -528,6 +532,7 @@
                         tableData.purchase_date = new Date(item.purchase_date.replace(/-/g, '/'));
                         tableData.expired_date = new Date(item.expired_date.replace(/-/g, '/'));
                         tableData.auction_name = '无标书信息';
+                        item.bid_status ? tableData.bid_status = '有效' : tableData.bid_status = '无效';
                         //auction
                         if (item.auction.length !== 0) {
                             let auction = item.auction[0];
@@ -595,7 +600,7 @@
                         this.tableData.push(tableData);
                     });
                 }
-                else{
+                else {
                     this.refreshIng = false;
                 }
             },
@@ -692,7 +697,7 @@
 
             },
             refreshData() {
-                if (!this.refreshIng){
+                if (!this.refreshIng) {
                     this.getIdentify_code();
                 }
             },

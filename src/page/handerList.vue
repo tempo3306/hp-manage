@@ -22,7 +22,7 @@
             </div>
             <el-table
                 :data="tableData"
-                style="width: 100%"
+                style="width: 100%" align="center"
                 height="700"
                 highlight-current-row>   <!--固定表头-->
                 <el-table-column type="expand">
@@ -63,7 +63,7 @@
                     label="累计收入"
                     prop="total_income">
                 </el-table-column>
-                <el-table-column label="操作" width="300px">
+                <el-table-column label="操作" width="220px">
                     <!--scope 对 父元素遍历，scope返回的值是slot标签上返回的所有属性值，并且是一个对象的形式保存起来，获取的是一个对象-->
                     <template scope="scope">
                         <el-button

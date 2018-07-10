@@ -14,8 +14,8 @@
                     <template slot="title"><i class="el-icon-document"></i>数据管理</template>
                     <el-menu-item index="handerList">拍手列表</el-menu-item>
                     <el-menu-item index="auctionList">标书列表</el-menu-item>
-                    <!--<el-menu-item index="userList">策略列表</el-menu-item>-->
                     <el-menu-item index="identify_codeList">激活码列表</el-menu-item>
+                    <el-menu-item index="recordList">记录列表</el-menu-item>
                 </el-submenu>
                 <el-submenu index="3">
                     <template slot="title"><i class="el-icon-plus"></i>添加数据</template>
