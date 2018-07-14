@@ -97,7 +97,7 @@
                     </el-form-item>
                     <el-form-item label="标书密码" label-width="100px" prop="Bid_password">
                         <el-col :span="18">
-                            <el-input  v-model="selectTable.Bid_password" auto-complete="off"></el-input>
+                            <el-input v-model="selectTable.Bid_password" auto-complete="off"></el-input>
                         </el-col>
                     </el-form-item>
                     <el-form-item label="标书状态" label-width="100px" prop="status">
@@ -134,47 +134,47 @@
 </template>
 
 <script>
-    import headTop from '@/components/headTop';
-    import {baseUrl, baseImgPath} from '@/config/env';
+    import headTop from '@/components/headTop'
+    import {baseUrl, baseImgPath} from '@/config/env'
     import {
         getRecord,
         addRecord,
         updateRecord,
         deleteRecord,
-    } from '@/api/hpData';
-    import waves from '@/directive/waves'; // 水波纹指令
+    } from '@/api/hpData'
+    import waves from '@/directive/waves' // 水波纹指令
     export default {
         directives: {
             waves
         },
         data() {
             const checkId_number = (rule, value, callback) => {
-                let reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-                if(reg.test(value) === false){
-                    return callback(new Error('请输入正确的身份证号'));
+                let reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+                if (reg.test(value) === false) {
+                    return callback(new Error('请输入正确的身份证号'))
                 }
-                else{
-                    callback();
+                else {
+                    callback()
                 }
-            };
+            }
             const checkBid_number = (rule, value, callback) => {
-                let reg = /(^\d{8}$)/;
-                if(reg.test(value) === false){
-                    return callback(new Error('请输入8位标书号'));
+                let reg = /(^\d{8}$)/
+                if (reg.test(value) === false) {
+                    return callback(new Error('请输入8位标书号'))
                 }
-                else{
-                    callback();
+                else {
+                    callback()
                 }
-            };
+            }
             const checkBid_password = (rule, value, callback) => {
-                let reg = /(^\d{4}$)/;
-                if(reg.test(value) === false){
-                    return callback(new Error('请输入4位标书密码'));
+                let reg = /(^\d{4}$)/
+                if (reg.test(value) === false) {
+                    return callback(new Error('请输入4位标书密码'))
                 }
-                else{
-                    callback();
+                else {
+                    callback()
                 }
-            };
+            }
             return {
                 baseUrl,
                 baseImgPath,
@@ -196,8 +196,8 @@
                     {label: '购买日期 -', key: '-purchase_date'}, {label: '到期时间 -', key: '-expired_date'},
                     {label: 'id +', key: 'id'}, {label: 'id -', key: '-id'}
                 ],
-            // #(('0', '未中标结束交易'), ('1', '中标完成交易'), ('2', '正常进行中'),
-            //     # ('3', '失效'), ('4', '中标未完成交易'))
+                // #(('0', '未中标结束交易'), ('1', '中标完成交易'), ('2', '正常进行中'),
+                //     # ('3', '失效'), ('4', '中标未完成交易'))
 
                 tableData: [],
                 currentPage: 1,
@@ -212,13 +212,12 @@
                     {label: 'ID', key: 'id', width: '50px'},
                     {label: '日期', key: 'date', width: '150px'},
                     {label: '拍手姓名', key: 'hander_name', width: '90px'},
+                    {label: '手机号', key: 'hander_telephone', width: '100px'},
                     {label: '标书姓名', key: 'auction_name', width: '175px'},
                     {label: '标书号', key: 'Bid_number', width: '110px'},
+                    {label: '第一次出价', key: 'firstprice', width: '100px'},
                     {label: '结果', key: 'result', width: '100px'},
                 ],
-
-
-
                 statusOptions: [
                     {label: '未中标结束交易', key: '未中标结束交易'},
                     {label: '中标完成交易', key: '中标完成交易'},
@@ -255,10 +254,10 @@
                         {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
                     ],
                 },
-            };
+            }
         },
         created() {
-            this.initData();
+            this.initData()
         },
         components: {
             headTop,
@@ -266,55 +265,60 @@
         methods: {
             async initData() {
                 try {
-                    this.getRecord();
+                    this.getRecord()
 
                 } catch (err) {
-                    console.log('获取数据失败', err);
+                    console.log('获取数据失败', err)
                 }
             },
             async getRecord() {
-                this.refreshIng = true;
-                console.log(this.listQuery);
+                this.refreshIng = true
+                console.log(this.listQuery)
                 const res = await getRecord({
                     page: this.listQuery.page, limit: this.listQuery.limit,
                     format: 'json', search: this.listQuery.search, sort: this.listQuery.sort,
                     available: 0
-                });
+                })
                 if (res.status === 401) {
-                    this.refreshIng = false;
-                    this.$router.push('login');
+                    this.refreshIng = false
+                    this.$router.push('login')
                     this.$message({
                         type: 'error',
                         message: '请重新登录'
                     })
                 }
-                else if (res.status === 200)
-                {
-                    this.tableData = [];
-                    this.count = res.data.count;
+                else if (res.status === 200) {
+                    this.tableData = []
+                    this.count = res.data.count
                     res.data.rows.forEach(item => {
-                        const tableData = {};
-                        tableData.id = item.id;
-                        tableData.date = item.date;
+                        const tableData = {}
+
+                        console.log(item)
+
+                        tableData.id = item.id
+                        tableData.date = item.date
                         // tableData.date_str = new Date(item.date.replace(/-/g, '/'));   // 过期时间
-                        tableData.hander_name = item.hander_name;  // 描述来源
-                        tableData.auction_name = item.auction_name; // 标书姓名
-                        tableData.Bid_number = item.Bid_number;  // 身份证号
-                        tableData.result = item.result;  // 身份证号
-                        let strategy_dick = this.handlestrategy(item.strategy_dick);  // 策略
-                        this.tableData.push(tableData);
+                        tableData.hander_name = item.hander_name  // 描述来源
+                        tableData.auction_name = item.auction_name // 标书姓名
+                        tableData.Bid_number = item.Bid_number  // 标书号
+                        tableData.result = item.result  // 身份证号
+                        let strategy_dick = this.handlestrategy(item.strategy_dick)  // 策略
+                        tableData.firstprice = item.firstprice
+                        item.firstprice ? tableData.firstprice = '已出价' : tableData.firstprice = '未出价'
+                        item.hander_telephone == null ? tableData.hander_telephone = '未知' : tableData.hander_telephone = item.hander_telephone
+                        this.tableData.push(tableData)
                         if (strategy_dick) {
-                            let strategy_type = strategy_dick['strategy_type']; //0  1   2   3
-                            tableData.strategy_dick = strategy_dick;
-                            console.log('fdsfsdf', strategy_type);
+                            let strategy_type = strategy_dick['strategy_type'] //0  1   2   3
+                            tableData.strategy_dick = strategy_dick
+                            console.log('fdsfsdf', strategy_type)
                             switch (strategy_type) {
                                 case '0': {
                                     tableData.strategy_text = strategy_dick.strategy_description +
                                         `第一枪 ${strategy_dick['2'][1]} 加 ${strategy_dick['2'][2]} \
                                         提前${strategy_dick['2'][3]}延迟${strategy_dick['2'][4]} \
-                                        强制${strategy_dick['2'][5]}`;
+                                        强制${strategy_dick['2'][5]}`
                                 }
-                                    break;
+                                    break
                                 case '1': {
                                     tableData.strategy_text = strategy_dick.strategy_description +
                                         `第一枪 ${strategy_dick['2'][1]} 加 ${strategy_dick['2'][2]}\
@@ -322,51 +326,50 @@
                                     强制${strategy_dick['2'][5]} \
                                     第二枪 ${strategy_dick['2'][8]} 加 ${strategy_dick['2'][9]}\
                                     提前${strategy_dick['2'][10]}延迟${strategy_dick['2'][11]} \
-                                    强制${strategy_dick['2'][12]}`;
+                                    强制${strategy_dick['2'][12]}`
                                 }
-                                    break;
+                                    break
                                 case '2': {
                                     tableData.strategy_text = `${strategy_dick.strategy_description} \
                                     ${strategy_dick['2'][16]} 前提前${strategy_dick['2'][14]}延迟${strategy_dick['2'][15]} \
                                     ${strategy_dick['2'][19]} 前提前${strategy_dick['2'][17]}延迟${strategy_dick['2'][18]} \
                                     ${strategy_dick['2'][22]} 前提前${strategy_dick['2'][20]}延迟${strategy_dick['2'][21]} \
-                                    强制${strategy_dick['2'][23]}秒`;
+                                    强制${strategy_dick['2'][23]}秒`
                                 }
-                                    break;
+                                    break
                                 case '3': {
                                     tableData.strategy_text = `${strategy_dick.strategy_dick_description} \
                                     ${strategy_dick['2'][16]} 前提前${strategy_dick['2'][14]}延迟${strategy_dick['2'][15]} \
                                     ${strategy_dick['2'][19]} 前提前${strategy_dick['2'][17]}延迟${strategy_dick['2'][18]} \
                                     ${strategy_dick['2'][22]} 前提前${strategy_dick['2'][20]}延迟${strategy_dick['2'][21]} \
-                                    强制${strategy_dick['2'][23]}秒`;
+                                    强制${strategy_dick['2'][23]}秒`
                                 }
-                                    break;
+                                    break
                             }
                         }
                         else {
-                            tableData.strategy_text = '未定义';
+                            tableData.strategy_text = '未定义'
                         }
 
 
-
-                    });
+                    })
                 }
-                else{
-                    this.refreshIng = false;
+                else {
+                    this.refreshIng = false
                 }
             },
             handleSizeChange(val) {
-                this.listQuery.limit = val;
-                this.listQuery.page = 1;
-                this.getRecord();
+                this.listQuery.limit = val
+                this.listQuery.page = 1
+                this.getRecord()
             },
             handleCurrentChange(val) {
-                this.listQuery.page = val;
-                this.getRecord();
+                this.listQuery.page = val
+                this.getRecord()
             },
             handleFilter() {
-                this.listQuery.page = 1;
-                this.getRecord();
+                this.listQuery.page = 1
+                this.getRecord()
             },
             handleCreate() {
                 // this.resetTemp()
@@ -377,97 +380,97 @@
                 // })
             },
             handleDownload() {
-                this.downloadLoading = true;
+                this.downloadLoading = true
                 import('@/utils/Export2Excel').then(excel => {
-                    const tHeader = ['id', 'description', 'Record_name', 'ID_number', 'Bid_password', 'status', 'count', 'expired_date_str'];
-                    const filterVal = ['id', 'description', 'Record_name', 'ID_number', 'Bid_password', 'status', 'count', 'expired_date_str'];
-                    const data = this.formatJson(filterVal, this.tableData);
+                    const tHeader = ['id', 'description', 'Record_name', 'ID_number', 'Bid_password', 'status', 'count', 'expired_date_str']
+                    const filterVal = ['id', 'description', 'Record_name', 'ID_number', 'Bid_password', 'status', 'count', 'expired_date_str']
+                    const data = this.formatJson(filterVal, this.tableData)
                     excel.export_json_to_excel({
                         header: tHeader,
                         data,
                         filename: 'table-list-Record'
-                    });
-                    this.downloadLoading = false;
-                });
+                    })
+                    this.downloadLoading = false
+                })
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
-                    console.log(valid);
+                    console.log(valid)
                     if (valid) {
-                        console.log("1234");
-                        this.updateData();
+                        console.log('1234')
+                        this.updateData()
 
                     } else {
-                        console.log('error submit!!');
-                        return false;
+                        console.log('error submit!!')
+                        return false
                     }
-                    console.log('ffffssss');
-                });
+                    console.log('ffffssss')
+                })
             },
             handleEdit(index, row) {
-                console.log('ff3');
-                this.selectTable = Object.assign({}, row); //深拷贝
-                this.dialogFormVisible = true;  //弹出对话框
+                console.log('ff3')
+                this.selectTable = Object.assign({}, row) //深拷贝
+                this.dialogFormVisible = true  //弹出对话框
             },
             handleAdd() {
-                this.$router.push({path: 'addRecord'});
+                this.$router.push({path: 'addRecord'})
                 // this.selectTable = Object.assign({}, row); //深拷贝
                 // this.dialogFormVisible = true;  //弹出对话框
             },
             async handleDelete(index, row) {
                 try {
-                    const res = await deleteRecord(row.id);
+                    const res = await deleteRecord(row.id)
                     if (res.status === 200) {
                         this.$message({
                             type: 'success',
                             message: '删除标书成功'
-                        });
-                        this.tableData.splice(index, 1);
+                        })
+                        this.tableData.splice(index, 1)
                     } else {
                         this.$message({
                             type: 'error',
                             message: '操作失败'
-                        });
+                        })
                     }
                 } catch (err) {
                     this.$message({
                         type: 'error',
                         message: '操作失败'
-                    });
-                    console.log('删除店铺失败');
+                    })
+                    console.log('删除店铺失败')
                 }
             },
             handlestrategy(stragtegy) {
                 if (stragtegy == 'none') {
-                    return null;
+                    return null
                 }
                 else {
-                    console.log(stragtegy);
-                    return JSON.parse(stragtegy);
+                    console.log(stragtegy)
+                    return JSON.parse(stragtegy)
                 }
             },
             async updateData() {
-                this.dialogFormVisible = false;
+                this.dialogFormVisible = false
                 try {
-                    console.log(this.selectTable);
-                    this.selectTable.expired_date = this.selectTable.expired_date.ymd();
-                    delete this.selectTable.expired_date_str;
-                    const res = await updateRecord(this.selectTable.id, this.selectTable);
-                    console.log(res.status);
+                    console.log(this.selectTable)
+                    this.selectTable.expired_date = this.selectTable.expired_date.ymd()
+                    delete this.selectTable.expired_date_str
+                    const res = await updateRecord(this.selectTable.id, this.selectTable)
+                    console.log(res.status)
                     if (res.status === 200) {
                         this.$message({
                             type: 'success',
                             message: '更新标书信息成功'
-                        });
-                        this.getRecord();
+                        })
+                        this.getRecord()
                     } else {
                         this.$message({
                             type: 'error',
                             message: res.message
-                        });
+                        })
                     }
                 } catch (err) {
-                    console.log('更新标书信息失败', err);
+                    console.log('更新标书信息失败', err)
                     this.$message({
                         type: error,
                         message: err
@@ -475,13 +478,13 @@
                 }
             },
             cancelData() {
-                this.dialogFormVisible = false;
+                this.dialogFormVisible = false
             },
             refreshData() {
-                this.getRecord();
+                this.getRecord()
             },
         }
-    };
+    }
 
 
 </script>
@@ -544,7 +547,6 @@
     .el-dialog--small {
         width: 30%;
     }
-
 
 
 </style>
