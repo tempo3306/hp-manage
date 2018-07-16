@@ -585,7 +585,7 @@
                                 }
                                     break;
                                 case '3': {
-                                    tableData.strategy_text = `${strategy_dick.strategy_dick_description} \
+                                    tableData.strategy_text = `${strategy_dick.strategy_description} \
                                     ${strategy_dick['2'][16]} 前提前${strategy_dick['2'][14]}延迟${strategy_dick['2'][15]} \
                                     ${strategy_dick['2'][19]} 前提前${strategy_dick['2'][17]}延迟${strategy_dick['2'][18]} \
                                     ${strategy_dick['2'][22]} 前提前${strategy_dick['2'][20]}延迟${strategy_dick['2'][21]} \

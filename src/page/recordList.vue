@@ -192,8 +192,7 @@
                 label: {
                     search: '搜索',
                 },
-                sortOptions: [{label: '购买日期 +', key: 'purchase_date'}, {label: '到期时间 +', key: 'expired_date'},
-                    {label: '购买日期 -', key: '-purchase_date'}, {label: '到期时间 -', key: '-expired_date'},
+                sortOptions: [{label: '出价完成', key: 'firstprice'}, {label: '出价未完成', key: '-firstprice'},
                     {label: 'id +', key: 'id'}, {label: 'id -', key: '-id'}
                 ],
                 // #(('0', '未中标结束交易'), ('1', '中标完成交易'), ('2', '正常进行中'),
